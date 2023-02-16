@@ -64,6 +64,11 @@ export const modules = [
 				author: null,
 				overallStars: 4,
 				text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo"
+			},
+			{
+				author: "Jonas",
+				overallStars: 5,
+				text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo"
 			}
 		],
 		overallStars: 4,

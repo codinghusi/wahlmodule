@@ -15,6 +15,7 @@ model Module {
   name        String
   description String
   season      Season
+  fileName    String
 
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
@@ -40,6 +41,7 @@ enum Season {
   Winter
   Summer
   Both
+  None
 }
 
 // Studiengang

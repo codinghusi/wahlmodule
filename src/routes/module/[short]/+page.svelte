@@ -18,6 +18,9 @@
 		...r,
 		id: i
 	}));
+
+	let reviewOpened = false;
+	let currentReview = null;
 </script>
 
 <Title title={`Modul: ${module.name}`} />
@@ -48,10 +51,11 @@
 		<h2> Rezensionen </h2>
 
 		<ul class='flex flex-wrap gap-x-8 gap-y-2 not-prose'>
+
 			{#each reviews as review}
 				<li class="card w-full bg-base-100 shadow-xl">
 
-					<ModalOpener class='card-body cursor-pointer' name={`review-${review.id}`}>
+					<ModalOpener class='card-body cursor-pointer' name="review" on:click={() => currentReview = review}>
 						<div class="flex">
 							<div>
 								<div class="card-title font-bold text-base m-0 mb-2 flex justify-between">
@@ -67,33 +71,36 @@
 								<ArrowRight />
 							</div>
 						</div>
-
 					</ModalOpener>
 
-					<Modal name={`review-${review.id}`} closeText="Nice!">
-						<div class='flex justify-between'>
-							<span class="font-bold">Von {review.author ?? '<Anonym>'}</span>
-							<Rating stars={review.overallStars} disabled={true} />
-						</div>
 
-						<!-- The Review (full) -->
-						<p class="my-2">
-							{review.text}
-						</p>
 
-						<span slot="actions" class="flex-1">
-							<ModalOpener class='btn btn-error' name={`flag-${review.id}`}>
-								<FlagIcon />
-								Melden
-							</ModalOpener>
-						</span>
-					</Modal>
 
-					<FlagAReviewModal name={`flag-${review.id}`} />
 				</li>
 			{/each}
 		</ul>
 	</article>
+	<Modal name="review" closeText="Nice!">
+		{#if currentReview !== null}
+			<div class='flex justify-between'>
+				<span class="font-bold">Von {currentReview.author ?? '<Anonym>'}</span>
+				<Rating stars={currentReview.overallStars} disabled={true} />
+			</div>
 
-	<p></p>
+			<!-- The Review (full) -->
+			<p class="my-2">
+				{currentReview.text}
+			</p>
+		{/if}
+
+		<span slot="actions" class="flex-1">
+			<ModalOpener class='btn btn-error' name="flag" disabled>
+				<FlagIcon />
+				Melden
+			</ModalOpener>
+		</span>
+
+		<FlagAReviewModal name="flag" />
+
+	</Modal>
 </section>

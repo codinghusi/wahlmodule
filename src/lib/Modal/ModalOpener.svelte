@@ -3,6 +3,6 @@
 	export let name;
 </script>
 
-<label for={getId(name)} {...$$props}>
+<label on:click for={getId(name)} {...$$props}>
 	<slot />
 </label>
