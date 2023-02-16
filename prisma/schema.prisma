@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Module {
+  short       String @id
+  name        String
+  description String
+  season      Season
+
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  degreePrograms DegreeProgramOfModel[]
+  focuses        FocusOfModel[]
+  lecturers      ModuleOnLecturer[]
+  reviews        Review[]
+  Focus          Focus?                 @relation(fields: [focusName], references: [name])
+  focusName      String?
+}
+
+// Sternebewertung
+enum Stars {
+  One
+  Two
+  Three
+  Four
+  Five
+}
+
+// Semesterzeit
+enum Season {
+  Winter
+  Summer
+  Both
+}
+
+// Studiengang
+model DegreeProgram {
+  short   String                 @id
+  long    String                 @unique
+  modules DegreeProgramOfModel[]
+}
+
+model DegreeProgramOfModel {
+  degreeProgram      DegreeProgram @relation(fields: [degreeProgramShort], references: [short])
+  degreeProgramShort String
+  module             Module        @relation(fields: [moduleShort], references: [short])
+  moduleShort        String
+
+  @@id([degreeProgramShort, moduleShort])
+}
+
+// Schwerpunkt
+model Focus {
+  name         String         @id
+  modules      Module[]
+  FocusOfModel FocusOfModel[]
+}
+
+model FocusOfModel {
+  module      Module @relation(fields: [moduleShort], references: [short])
+  moduleShort String
+  focus       Focus  @relation(fields: [focusName], references: [name])
+  focusName   String
+
+  @@id([moduleShort, focusName])
+}
+
+// Dozent
+model Lecturer {
+  short    String             @id
+  fullName String             @unique
+  modules  ModuleOnLecturer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ModuleOnLecturer {
+  module        Module   @relation(fields: [moduleShort], references: [short])
+  moduleShort   String
+  lecturer      Lecturer @relation(fields: [lecturerShort], references: [short])
+  lecturerShort String
+
+  @@id([moduleShort, lecturerShort])
+}
+
+// Rezension
+model Review {
+  id        Int    @id @default(autoincrement())
+  editToken String @unique @default(uuid())
+
+  module      Module @relation(fields: [moduleShort], references: [short])
+  moduleShort String
+
+  text         String?
+  spannend     Stars?
+  uebungen     Stars?
+  klausur      Stars?
+  leichtigkeit Stars?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
