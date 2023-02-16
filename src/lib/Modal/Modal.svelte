@@ -10,10 +10,8 @@
 <div class="modal">
 	<div class="modal-box">
 		<slot />
-		{#if closeText !== null}
-			<ModalActions name={name} closeText={closeText}>
-				<slot name="actions" />
-			</ModalActions>
-		{/if}
+		<ModalActions name={name} closeText={closeText}>
+			<slot name="actions" />
+		</ModalActions>
 	</div>
 </div>

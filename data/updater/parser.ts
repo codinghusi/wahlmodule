@@ -10,9 +10,9 @@ const propertyMapping = {
 	'schwerpunkt': 'focuses',
 	'focus': 'focuses',
 
-	'studiengaenge': 'degree_programs',
-	'studiengang': 'degree_programs',
-	'degree_programs': 'degree_programs',
+	'studiengaenge': 'degreePrograms',
+	'studiengang': 'degreePrograms',
+	'degreeProgram': 'degreePrograms',
 
 	'semester': 'seasons',
 
@@ -21,8 +21,8 @@ const propertyMapping = {
 	'lecturer': 'lecturers',
 } as const;
 const allowedProperties = Object.values(propertyMapping);
-const listProperties = [ 'degree_programs', 'dependencies', 'focuses', 'seasons', 'lecturers' ] as const;
-const mustHave = [ 'short', 'name', 'description', 'seasons' ] as const;
+const listProperties = [ 'degreePrograms', 'dependencies', 'focuses', 'seasons', 'lecturers' ] as const;
+const mustHave = [ 'short', 'name', 'description' ] as const;
 
 type Property = typeof propertyMapping[keyof typeof propertyMapping];
 type RequiredProperty = typeof mustHave[number];
@@ -36,12 +36,12 @@ export type Parsed =
 
 export function parse(content: string): Parsed {
 	const lines = content.split('\n')[Symbol.iterator]();
-	if (lines.next().value?.trim() !== '--') {
+	if (lines.next().value?.trim() !== '---') {
 		throw "invalid file format: needs to start with two dashes --";
 	}
-	const config: Partial<Parsed> = { seasons: [] };
+	const config: Partial<Parsed> = {};
 	for (const line of lines) {
-		if (line.trim() === '--') {
+		if (line.trim() === '---') {
 			break;
 		}
 		const data = line.split('=');
@@ -73,6 +73,23 @@ export function parse(content: string): Parsed {
 
 	if (mustHave.every(mh => mh in config)) {
 		return config as Parsed;
+	}
+
+	for (const p of allowedProperties) {
+		if (p in config) {
+			continue;
+		}
+		if (listProperties.includes(p as any)) {
+			// FIXME
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			config[p] = [];
+		} else {
+			// FIXME
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			config[p] = '';
+		}
 	}
 
 	const violating = mustHave.filter(mh => !(mh in config));

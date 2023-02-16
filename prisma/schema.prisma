@@ -13,27 +13,18 @@ datasource db {
 model Module {
   short       String @id
   name        String
-  description String
+  description String @db.Text
   season      Season
-  fileName    String
+  fileName    String @unique
 
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
-  degreePrograms DegreeProgramOfModel[]
-  focuses        FocusOfModel[]
-  lecturers      ModuleOnLecturer[]
+  degreePrograms DegreeProgram[]
+  focuses        Focus[]
+  lecturers      Lecturer[]
   reviews        Review[]
-  Focus          Focus?                 @relation(fields: [focusName], references: [name])
-  focusName      String?
-}
-
-// Sternebewertung
-enum Stars {
-  One
-  Two
-  Three
-  Four
-  Five
+  dependencies   Module[]   @relation("ModuleDepends")
+  dependencyTo   Module[]   @relation("ModuleDepends")
 }
 
 // Semesterzeit
@@ -48,51 +39,24 @@ enum Season {
 model DegreeProgram {
   short   String                 @id
   long    String                 @unique
-  modules DegreeProgramOfModel[]
-}
-
-model DegreeProgramOfModel {
-  degreeProgram      DegreeProgram @relation(fields: [degreeProgramShort], references: [short])
-  degreeProgramShort String
-  module             Module        @relation(fields: [moduleShort], references: [short])
-  moduleShort        String
-
-  @@id([degreeProgramShort, moduleShort])
+  modules Module[]
 }
 
 // Schwerpunkt
 model Focus {
   name         String         @id
   modules      Module[]
-  FocusOfModel FocusOfModel[]
-}
-
-model FocusOfModel {
-  module      Module @relation(fields: [moduleShort], references: [short])
-  moduleShort String
-  focus       Focus  @relation(fields: [focusName], references: [name])
-  focusName   String
-
-  @@id([moduleShort, focusName])
 }
 
 // Dozent
 model Lecturer {
   short    String             @id
   fullName String             @unique
-  modules  ModuleOnLecturer[]
+  homepage String
+  modules  Module[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model ModuleOnLecturer {
-  module        Module   @relation(fields: [moduleShort], references: [short])
-  moduleShort   String
-  lecturer      Lecturer @relation(fields: [lecturerShort], references: [short])
-  lecturerShort String
-
-  @@id([moduleShort, lecturerShort])
 }
 
 // Rezension
@@ -104,10 +68,10 @@ model Review {
   moduleShort String
 
   text         String?
-  spannend     Stars?
-  uebungen     Stars?
-  klausur      Stars?
-  leichtigkeit Stars?
+  spannend     Int?
+  uebungen     Int?
+  klausur      Int?
+  leichtigkeit Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

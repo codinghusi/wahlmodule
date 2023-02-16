@@ -1,5 +1,5 @@
 <script>
-	export let stars;
+	export let stars = 0;
 	export let disabled = false;
 	let name = "rating";
 	let clazz = '';
@@ -12,6 +12,7 @@
 </script>
 
 <form class={`rating ${clazz}`}>
+	<input type="radio" bind:group={stars} disabled={disabled} value={0} name={name} class={`${radioClasses} hidden`} />
 	<input type="radio" bind:group={stars} disabled={disabled} value={1} name={name} class={radioClasses} />
 	<input type="radio" bind:group={stars} disabled={disabled} value={2} name={name} class={radioClasses} />
 	<input type="radio" bind:group={stars} disabled={disabled} value={3} name={name} class={radioClasses} />
