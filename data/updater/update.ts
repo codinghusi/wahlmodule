@@ -14,6 +14,7 @@ const dir = path.join(__dirname, '../modules');
 const lecturersFile = path.join(__dirname, '../other/lecturers.json');
 const degreeProgramsFile = path.join(__dirname, '../other/degree-programs.json');
 const focusesFile = path.join(__dirname, '../other/focuses.json');
+const ratingsFile = path.join(__dirname, '../other/ratings.json');
 
 const hashFile = path.join(__dirname, './lastCommit.txt');
 
@@ -27,9 +28,10 @@ exec('echo \'schabernack\'', async (error, stdout) => {
 	
 	const commit = getLastHash();
 	
-	await updateFocuses(commit);
-	await updateLecturers(commit);
-	await updateDegreePrograms(commit);
+	await updateByFile(commit, ratingsFile, 'id', 'rating');
+	await updateByFile(commit, focusesFile, 'name', 'focus');
+	await updateByFile(commit, lecturersFile, 'short', 'lecturer');
+	await updateByFile(commit, degreeProgramsFile, 'short', 'degreeProgram');
 	await updateModules(commit);
 	
 	updateHash();
@@ -38,69 +40,24 @@ exec('echo \'schabernack\'', async (error, stdout) => {
 	
 });
 
-interface Focus {
-	name: string;
-}
 
-async function updateFocuses(commit: string) {
-	if (fileHasChanged(commit, focusesFile)) {
-		const content = fs.readFileSync(focusesFile, { encoding: 'utf-8' });
-		const focuses = JSON.parse(content) as Focus[];
-		const upserts = focuses.map(focus => ({
-			where: { name: focus.name },
-			update: focus,
-			create: focus
+async function updateByFile<T>(commit: string, fileName: string, idKey: keyof T, model: keyof typeof prisma) {
+	if (fileHasChanged(commit, fileName)) {
+		const content = fs.readFileSync(fileName, { encoding: 'utf-8' });
+		const ratings = JSON.parse(content) as T[];
+		const upserts = ratings.map(entry => ({
+			where: { [idKey]: entry[idKey] },
+			update: entry,
+			create: entry
 		}));
 		prisma.$transaction(
-			upserts.map(upsert => prisma.focus.upsert(upsert))
-		);
-	}
-}
-
-interface Lecturer {
-	short: string,
-	fullName: string,
-	homepage: string
-}
-
-async function updateLecturers(commit: string) {
-	if (fileHasChanged(commit, lecturersFile)) {
-		const content = fs.readFileSync(lecturersFile, { encoding: 'utf-8' });
-		const lecturers = JSON.parse(content) as Lecturer[];
-		const upserts = lecturers.map(lecturer => ({
-			where: { short: lecturer.short },
-			update: lecturer,
-			create: lecturer
-		}));
-		prisma.$transaction(
-			upserts.map(upsert => prisma.lecturer.upsert(upsert))
-		);
-	}
-}
-
-
-interface DegreeProgram {
-	short: string,
-	long: string
-}
-
-async function updateDegreePrograms(commit: string) {
-	if (fileHasChanged(commit, degreeProgramsFile)) {
-		const content = fs.readFileSync(degreeProgramsFile, { encoding: 'utf-8' });
-		const degreePrograms = JSON.parse(content) as DegreeProgram[];
-		const upserts = degreePrograms.map(degreeProgram => ({
-			where: { short: degreeProgram.short },
-			update: degreeProgram,
-			create: degreeProgram
-		}));
-		prisma.$transaction(
-			upserts.map(upsert => prisma.degreeProgram.upsert(upsert))
+			upserts.map(upsert => (prisma[model] as any).upsert(upsert))
 		);
 	}
 }
 
 async function updateModules(commit: string) {
-	const files = getUpdatedFiles(commit, '../modules/');
+	const files = getUpdatedFiles(commit, dir);
 	const updates = [];
 	const deletes = [];
 	for (const file of files) {

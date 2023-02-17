@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "label": "Spannend",
+    "explanation": "Ist das Modul spannend gewesen?"
+  },
+  {
+    "id": 2,
+    "label": "Klausur",
+    "explanation": "Wie fair bzw. angenehm war die Klausur?"
+  },
+  {
+    "id": 3,
+    "label": "Übungen",
+    "explanation": "Wie hilfreich waren die zur Verfügung gestellten Übungen?"
+  }
+]

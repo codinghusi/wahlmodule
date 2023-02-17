@@ -59,20 +59,24 @@ model Lecturer {
   updatedAt DateTime @updatedAt
 }
 
+model Rating {
+    id          Int     @id
+    label       String
+    explanation String
+    reviews     Review[]
+}
+
 // Rezension
 model Review {
-  id        Int    @id @default(autoincrement())
-  editToken String @unique @default(uuid())
+  id          Int    @id @default(autoincrement())
+  editToken   String @unique @default(uuid())
 
   module      Module @relation(fields: [moduleShort], references: [short])
   moduleShort String
 
-  text         String?
-  spannend     Int?
-  uebungen     Int?
-  klausur      Int?
-  leichtigkeit Int?
+  text        String?
+  ratings     Rating[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
