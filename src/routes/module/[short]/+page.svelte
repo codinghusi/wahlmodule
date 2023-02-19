@@ -18,8 +18,9 @@
 		reviewModal.open();
 	}
 
-	function submit(e) {
-		location.reload();
+	let reviews;
+	function submit() {
+		reviews.reload();
 	}
 </script>
 
@@ -46,7 +47,6 @@
 		</article>
 	{/if}
 
-
 	<!-- Reviews -->
 	<article>
 		<h2 class="flex flex-wrap gap-4 justify-between">
@@ -56,7 +56,8 @@
 			</ModalOpener>
 		</h2>
 
-		<Reviews {module} />
+		<Reviews {module} bind:this={reviews} />
+
 	</article>
 </section>
 

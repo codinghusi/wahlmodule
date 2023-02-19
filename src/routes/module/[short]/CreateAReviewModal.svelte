@@ -5,9 +5,11 @@
 		AUTHOR_NAME_MIN_LENGTH,
 		MIN_RATING_COUNT,
 		REVIEW_TEXT_MIN_LENGTH
-	} from '../../api/create-review/definitions';
+	} from '../../../lib/Data/definitions';
 	import RatingList from '../../../lib/Rating/RatingList.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { createReview } from '../../api/calls';
+	import { errorMessage, successMessage } from '../../../lib/Message/MessageStore';
 
 	export let name;
 	export let possibleRating;
@@ -39,33 +41,31 @@
 		submitEnabled = reviewText?.length >= REVIEW_TEXT_MIN_LENGTH
 			&& ratings.filter(rating => rating.stars > 0).length >= MIN_RATING_COUNT
 			&& (!authorName || authorName?.length === 0 || authorName?.length >= AUTHOR_NAME_MIN_LENGTH);
-		submitEnabled = true;
 	}
 
 	async function submit() {
-		const response = await fetch(`/api/create-review`, {
-			method: 'POST',
-			body: JSON.stringify({
-				review: {
-					moduleShort: module.short,
-					authorName,
-					text: reviewText,
-					ratings: ratings
-						.filter(rating => rating.stars > 0)
-						.map(rating => ({ id: rating.id, stars: rating.stars }))
-				}
-			})
-		});
-		const json = await response.json();
-		if (!json?.success) {
-			alert('Fehler beim Absenden. Versuche es später noch einmal.');
+		let failed = false;
+		const response = await createReview({
+			moduleShort: module.short,
+			authorName,
+			text: reviewText,
+			ratings: ratings
+				.filter(rating => rating.stars > 0)
+				.map(rating => ({ id: rating.id, stars: rating.stars }))
+		}).catch(() => failed = true);
+
+		if (!response?.success || failed) {
+			errorMessage("Es ist ein Fehler aufgetreten. Versuche es später noch einmal.");
 			return;
 		}
+
+		// Reset form
 		reviewText = '';
 		authorName = '';
 		initRatings();
-		dispatch('submit', { review: json.review });
+		dispatch('submit', { review: response.review });
 		closer.close();
+		successMessage("Bewertung erfolgreich abgesendet!");
 	}
 
 </script>
@@ -81,7 +81,7 @@
 
 	<label>
 		<div class="label">
-			<span class="label-text">Wie heißt du? (optional, min. 5 Zeichen)</span>
+			<span class="label-text">Wie heißt du? <em>(optional, min. 5 Zeichen)</em></span>
 		</div>
 		<input type="text" placeholder="<Anonym>" bind:value={authorName} minlength={AUTHOR_NAME_MIN_LENGTH}
 			   class="input input-bordered w-full max-w-xs" />
@@ -92,7 +92,7 @@
 		<RatingList bind:ratings disabled={false} />
 
 		<label class="label mt-2">
-			<span class="label-text">Bewertung*</span>
+			<span class="label-text">Bewertung* <em>(min. 10 Zeichen)</em></span>
 		</label>
 
 		<textarea name="reason" class="textarea textarea-bordered w-full" minlength="10" bind:value={reviewText}
@@ -100,7 +100,7 @@
 	</form>
 
 	<span slot="actions">
-			<ModalCloser class="btn btn-secondary" name={name} bind:this={closer}>
+			<ModalCloser class="btn btn-ghost" name={name} bind:this={closer}>
 				Abbrechen
 			</ModalCloser>
 			<button class="btn btn-primary" disabled={!submitEnabled} name={name} on:click={submit}>

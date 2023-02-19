@@ -1,13 +1,9 @@
-import { error } from '@sveltejs/kit';
-import { modules } from '../../search/data';
-import { PrismaClient } from '@prisma/client';
 import { moduleWithRating } from '../../../lib/db/module';
 import { reviewWithOverallStars } from '../../../lib/db/review';
+import { prisma } from '../../../lib/Data/client';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-	const prisma = new PrismaClient();
-	
 	const possibleRating = await prisma.rating.findMany();
 	
 	let module = await prisma.module.findUniqueOrThrow({
@@ -22,10 +18,8 @@ export async function load({ params }) {
 		}
 	})
 	
-	module = await moduleWithRating(prisma, module);
-	module.reviews = await Promise.all(module.reviews.map(review => reviewWithOverallStars(prisma, review)));
-	
-	prisma.$disconnect();
+	module = await moduleWithRating(module);
+	module.reviews = await Promise.all(module.reviews.map(review => reviewWithOverallStars(review)));
 
 	return { module, possibleRating };
 	

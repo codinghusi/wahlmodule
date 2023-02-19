@@ -1,0 +1,18 @@
+<script lang="ts">
+	import { removeMessage } from './MessageStore';
+	import type { Message } from './MessageStore';
+	import XIcon from '../icons/XIcon.svelte';
+
+	export let message: Message;
+
+	function remove() {
+		removeMessage(message.id);
+	}
+
+</script>
+
+<li class="alert alert-{message.type} shadow-lg">
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+	<span>{message.message}</span>
+	<button class="btn btn-ghost" on:click={remove}> <XIcon /> </button>
+</li>

@@ -28,7 +28,7 @@ exec('echo \'schabernack\'', async (error, stdout) => {
 	
 	const commit = getLastHash();
 	
-	await updateByFile(commit, ratingsFile, 'id', 'rating');
+	await updateByFile(commit, ratingsFile, 'id', 'rating', true);
 	await updateByFile(commit, focusesFile, 'name', 'focus');
 	await updateByFile(commit, lecturersFile, 'short', 'lecturer');
 	await updateByFile(commit, degreeProgramsFile, 'short', 'degreeProgram');
@@ -41,18 +41,21 @@ exec('echo \'schabernack\'', async (error, stdout) => {
 });
 
 
-async function updateByFile<T>(commit: string, fileName: string, idKey: keyof T, model: keyof typeof prisma) {
+async function updateByFile<T>(commit: string, fileName: string, idKey: keyof T, model: keyof typeof prisma, deleteAll = false) {
 	if (fileHasChanged(commit, fileName)) {
 		const content = fs.readFileSync(fileName, { encoding: 'utf-8' });
-		const ratings = JSON.parse(content) as T[];
-		const upserts = ratings.map(entry => ({
+		const entries = JSON.parse(content) as T[];
+		const upserts = entries.map(entry => ({
 			where: { [idKey]: entry[idKey] },
 			update: entry,
 			create: entry
 		}));
-		prisma.$transaction(
-			upserts.map(upsert => (prisma[model] as any).upsert(upsert))
-		);
+		const commands = [];
+		if (deleteAll) {
+			commands.push((prisma[model] as any).deleteMany());
+		}
+		commands.push(...upserts.map(upsert => (prisma[model] as any).upsert(upsert)));
+		prisma.$transaction(commands);
 	}
 }
 

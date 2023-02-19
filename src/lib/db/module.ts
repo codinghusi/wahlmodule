@@ -1,13 +1,13 @@
-import { PrismaClient } from '@prisma/client';
 import { average } from '../helper';
+import { prisma } from '../Data/client';
 
 type Module = any;
 
-export async function modulesWithRatings(prisma: PrismaClient, modules: Module[]) {
+export async function modulesWithRatings(modules: Module[]) {
 	return Promise.all(modules.map(module => moduleWithRating(prisma, module)));
 }
 
-export async function moduleWithRating(prisma: PrismaClient, module: Module) {
+export async function moduleWithRating(module: Module) {
 	const stars = await prisma.$queryRaw`
         SELECT rating.*, AVG(ratingofreview.stars) as stars
         FROM module

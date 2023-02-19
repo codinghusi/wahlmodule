@@ -27,6 +27,6 @@
 
 <style>
 	.tooltip::before {
-		width: 12rem;
+		@apply w-48;
 	}
 </style>

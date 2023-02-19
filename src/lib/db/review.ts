@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../Data/client';
 
 type Review = any;
 
-export async function reviewWithOverallStars(prisma: PrismaClient, review: Review) {
+export async function reviewWithOverallStars(review: Review) {
 	const avg = await prisma.ratingOfReview.aggregate({
 		where: {
 			reviewId: review.id
@@ -16,4 +16,8 @@ export async function reviewWithOverallStars(prisma: PrismaClient, review: Revie
 		...review,
 		overallStars: avg._avg.stars
 	}
+}
+
+export async function reviewsWithOverallStars(reviews: Review[]) {
+	return Promise.all(reviews.map(review => reviewWithOverallStars(review)));
 }

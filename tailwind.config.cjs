@@ -10,7 +10,7 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography"), require('daisyui')],
   safelist: [
-      'tooltip-left',
-      'tooltip-right',
+      'tooltip-left', 'tooltip-right',
+      'alert-info', 'alert-success', 'alert-error',
   ],
 }
