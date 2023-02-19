@@ -7,32 +7,21 @@ export async function modulesWithRatings(prisma: PrismaClient, modules: Module[]
 	return Promise.all(modules.map(module => moduleWithRating(prisma, module)));
 }
 
-const RATING_MAPPING = {
-	'spannend': "Spannend",
-	'uebungen': "Übungen",
-	'klausur': "Klausur",
-	'leichtigkeit': "Leichtigkeit",
-} as const;
-
 export async function moduleWithRating(prisma: PrismaClient, module: Module) {
-	const avg = await prisma.review.aggregate({
-		_avg: {
-			spannend: true,
-			uebungen: true,
-			klausur: true,
-			leichtigkeit: true
-		},
-		where: {
-			moduleShort: module.short
-		}
-	});
-	const filteredAvg = Object.fromEntries(Object.entries(avg._avg).filter(([, value]) => !!value));
-	if (filteredAvg.length) {
+	const stars = await prisma.$queryRaw`
+        SELECT rating.*, AVG(ratingofreview.stars) as stars
+        FROM module
+                 JOIN review ON module.short = review.moduleShort
+                 JOIN ratingofreview ON review.id = ratingofreview.reviewId
+                 JOIN rating ON ratingofreview.ratingId = rating.id
+        WHERE module.short = ${module.short}
+        GROUP BY rating.id` as { id: number, label: string, explanation: string, stars: number }[];
+	if (stars.length) {
 		return {
 			...module,
 			rated: true,
-			specificRatings: Object.entries(filteredAvg).map(([key, value]) => ({ name: RATING_MAPPING[key], stars: value })),
-			overallStars: average(Object.values(filteredAvg))
+			specificRatings: stars.map(star => Object.assign(star, { stars: ~~star.stars})),
+			overallStars: average(stars.map(star => star.stars))
 		}
 	}
 	return {

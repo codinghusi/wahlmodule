@@ -2,12 +2,15 @@ import { error } from '@sveltejs/kit';
 import { modules } from '../../search/data';
 import { PrismaClient } from '@prisma/client';
 import { moduleWithRating } from '../../../lib/db/module';
+import { reviewWithOverallStars } from '../../../lib/db/review';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
 	const prisma = new PrismaClient();
 	
-	const module = prisma.module.findUniqueOrThrow({
+	const possibleRating = await prisma.rating.findMany();
+	
+	let module = await prisma.module.findUniqueOrThrow({
 		where: {
 			short: params.short
 		},
@@ -19,11 +22,12 @@ export async function load({ params }) {
 		}
 	})
 	
+	module = await moduleWithRating(prisma, module);
+	module.reviews = await Promise.all(module.reviews.map(review => reviewWithOverallStars(prisma, review)));
+	
 	prisma.$disconnect();
 
-	return {
-		module: await moduleWithRating(prisma, module)
-	};
+	return { module, possibleRating };
 	
 	// throw error(404, 'Not found');
 }

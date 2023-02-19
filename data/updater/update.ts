@@ -69,6 +69,7 @@ async function updateModules(commit: string) {
 				const rawUpdate = {
 					...parsed,
 					season,
+					short: parsed.short.toLowerCase(),
 					fileName: file.filename
 				};
 				const update = Object.fromEntries((

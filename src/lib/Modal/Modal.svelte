@@ -3,6 +3,10 @@
 	import ModalActions from './ModalActions.svelte';
 	export let name;
 	export let closeText = null;
+
+	export function open() {
+		document.getElementById(getId(name)).checked = true;
+	}
 </script>
 
 <!-- Put this part before </body> tag -->

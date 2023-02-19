@@ -1,15 +1,19 @@
 <script>
-	import Rating from '../../lib/Rating.svelte';
+	import Rating from '../../lib/Rating/Rating.svelte';
 	import { availableFilters } from './data';
 	import FilterIcon from '../../lib/icons/FilterIcon.svelte';
 	import SearchIcon from '../../lib/icons/SearchIcon.svelte';
 	import Title from '../../lib/Title/Title.svelte';
+	import RatingList from '../../lib/Rating/RatingList.svelte';
+	import CrossedStar from '../../lib/icons/CrossedStar.svelte';
 
 	let filters = [];
 	export let data;
 
 	let modules;
 	$: modules = data.modules;
+
+	$: console.log(modules);
 
 	filters.push(availableFilters[0].values[0], availableFilters[1].values[0], availableFilters[2].values[0]);
 	// Aufzeichnungen, Vorlesung, Praktika, Übungen, Aufwand, Klausur
@@ -109,7 +113,7 @@
 						{#if (module.rated)}
 							<Rating stars={module.overallStars} disabled={true} />
 						{:else}
-							<a class="btn btn-secondary">Bewerten!</a>
+							<CrossedStar />
 						{/if}
 					</div>
 
@@ -117,15 +121,7 @@
 						<div class="divider mt-0"></div>
 
 						{#if (module.rated)}
-							<ul class="grid grid-cols-2 gap-4">
-
-								{#each module.specificRatings as rating}
-									<li>
-										<p>{rating.name}</p>
-										<Rating stars={rating.stars} disabled={true} />
-									</li>
-								{/each}
-							</ul>
+							<RatingList ratings={module.specificRatings} />
 						{:else}
 							<p>Dieses Modul hat noch zu wenig Bewertungen</p>
 						{/if}

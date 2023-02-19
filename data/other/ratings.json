@@ -13,5 +13,30 @@
     "id": 3,
     "label": "Übungen",
     "explanation": "Wie hilfreich waren die zur Verfügung gestellten Übungen?"
+  },
+  {
+    "id": 4,
+    "label": "Praktika (hilfreich?)",
+    "explanation": "Wie hilfreich waren die zu bearbeitenden Praktikas?"
+  },
+  {
+    "id": 5,
+    "label": "Praktika (wenig Aufwand?)",
+    "explanation": "Wie aufwändig waren die Praktika? 1 Stern für sehr aufwändig, 5 Sterne für wenig aufwendig."
+  },
+  {
+    "id": 6,
+    "label": "Vorlesung (Inhalt)",
+    "explanation": "Wie gut waren die Vorlesungen aufbereitet?"
+  },
+  {
+    "id": 7,
+    "label": "Vorlesung (Live/Aufzeichnungen)",
+    "explanation": "Gab es Aufzeichnungen? Wenn ja, wie gut waren die Mitschnitte? (sonst leer lassen)"
+  },
+  {
+    "id": 8,
+    "label": "Tutorium",
+    "explanation": "Wie gut konnte dir das Tutorium helfen? (ggf. leer lassen)"
   }
 ]

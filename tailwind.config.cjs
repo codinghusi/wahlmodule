@@ -9,4 +9,8 @@ module.exports = {
     darkTheme: 'autumn'
   },
   plugins: [require("@tailwindcss/typography"), require('daisyui')],
+  safelist: [
+      'tooltip-left',
+      'tooltip-right',
+  ],
 }

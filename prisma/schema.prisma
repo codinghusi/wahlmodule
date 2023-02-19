@@ -17,14 +17,14 @@ model Module {
   season      Season
   fileName    String @unique
 
-  createdAt      DateTime               @default(now())
-  updatedAt      DateTime               @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   degreePrograms DegreeProgram[]
   focuses        Focus[]
   lecturers      Lecturer[]
   reviews        Review[]
-  dependencies   Module[]   @relation("ModuleDepends")
-  dependencyTo   Module[]   @relation("ModuleDepends")
+  dependencies   Module[]        @relation("ModuleDepends")
+  dependencyTo   Module[]        @relation("ModuleDepends")
 }
 
 // Semesterzeit
@@ -37,21 +37,21 @@ enum Season {
 
 // Studiengang
 model DegreeProgram {
-  short   String                 @id
-  long    String                 @unique
+  short   String   @id
+  long    String   @unique
   modules Module[]
 }
 
 // Schwerpunkt
 model Focus {
-  name         String         @id
-  modules      Module[]
+  name    String   @id
+  modules Module[]
 }
 
 // Dozent
 model Lecturer {
-  short    String             @id
-  fullName String             @unique
+  short    String   @id
+  fullName String   @unique
   homepage String
   modules  Module[]
 
@@ -60,23 +60,34 @@ model Lecturer {
 }
 
 model Rating {
-    id          Int     @id
-    label       String
-    explanation String
-    reviews     Review[]
+  id          Int              @id
+  label       String
+  explanation String
+  reviews     RatingOfReview[]
+}
+
+model RatingOfReview {
+  rating   Rating @relation(fields: [ratingId], references: [id])
+  review   Review @relation(fields: [reviewId], references: [id])
+  stars    Int
+  ratingId Int
+  reviewId Int
+
+  @@id([ratingId, reviewId])
 }
 
 // Rezension
 model Review {
-  id          Int    @id @default(autoincrement())
-  editToken   String @unique @default(uuid())
+  id        Int    @id @default(autoincrement())
+  editToken String @unique @default(uuid())
 
   module      Module @relation(fields: [moduleShort], references: [short])
   moduleShort String
 
-  text        String?
-  ratings     Rating[]
+  authorName String?
+  text    String
+  ratings RatingOfReview[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
