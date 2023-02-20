@@ -17,6 +17,21 @@
 	export let module;
 	export let ownedReview = null;
 
+	let wipReview;
+	let authorName = '';
+	let text = '';
+	let editToken = undefined;
+	let id = undefined;
+	let ratings = possibleRating.map(r => ({ stars: 0, ...r }));
+
+	$: wipReview = {
+		editToken,
+		id,
+		authorName,
+		text,
+		ratings
+	};
+
 	$: updateValues(ownedReview);
 
 	function updateValues(review) {
@@ -24,39 +39,26 @@
 			return;
 		}
 		authorName = review.authorName;
-		reviewText = review.text;
-		ratings = review.ratings.map(rating => ({ stars: rating.stars, ...rating.rating }));
+		text = review.text;
+		ratings = possibleRating.map(r => ({
+			stars: review.ratings.find(r2 => r2.ratingId === r.id)?.stars ?? 0,
+			...r
+		}));
+		editToken = review.editToken;
+		id = review.id;
 	}
 
-	let dispatch = createEventDispatcher();
 
-	let modal;
-
-	export function open() {
-		modal.open();
-	}
-
-	let ratings;
-	initRatings();
-
-	function initRatings() {
-		ratings = possibleRating.map(r => ({ stars: 0, ...r }));
-	}
-
-	let reviewText = '';
-	let submitEnabled;
 	let loading = false;
-
-	let form;
-	let closer;
-	let authorName;
-
+	let submitEnabled;
 	$: {
-		submitEnabled = reviewText?.length >= REVIEW_TEXT_MIN_LENGTH
+		submitEnabled = text?.length >= REVIEW_TEXT_MIN_LENGTH
 			&& ratings.filter(rating => rating.stars > 0).length >= MIN_RATING_COUNT
 			&& (!authorName || authorName?.length === 0 || authorName?.length >= AUTHOR_NAME_MIN_LENGTH);
 	}
 
+	let closer;
+	let dispatch = createEventDispatcher();
 	async function submit() {
 		loading = true;
 		const response = await createReview({
@@ -64,7 +66,7 @@
 			editToken: ownedReview?.editToken,
 			moduleShort: module.short,
 			authorName,
-			text: reviewText,
+			text: text,
 			ratings: ratings
 				.filter(rating => rating.stars > 0)
 				.map(rating => ({ id: rating.id, stars: rating.stars }))
@@ -76,15 +78,16 @@
 			return;
 		}
 
+		successMessage("Bewertung erfolgreich abgesendet!");
+
 		dispatch('submit', { review: response.review });
 		closer.close();
-		successMessage("Bewertung erfolgreich abgesendet!");
 	}
 
 </script>
 
 
-<Modal name={name} bind:this={modal}>
+<Modal name={name}>
 	<div class="">
 		<h1 class="font-bold">Bewertung schreiben</h1>
 		<p class="italic">Bewerte bitte mindestens 3 Kategorien und gebe einen kleinen Text dazu.</p>
@@ -101,14 +104,14 @@
 	</label>
 
 
-	<form class="form-controll w-full" bind:this={form}>
+	<form class="form-controll w-full">
 		<RatingList bind:ratings disabled={false} />
 
 		<label class="label mt-2">
 			<span class="label-text">Bewertung* <em>(min. 10 Zeichen)</em></span>
 		</label>
 
-		<textarea name="reason" class="textarea textarea-bordered w-full" minlength="10" bind:value={reviewText}
+		<textarea name="reason" class="textarea textarea-bordered w-full" minlength="10" bind:value={text}
 				  required></textarea>
 	</form>
 

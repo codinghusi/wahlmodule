@@ -26,8 +26,6 @@ export async function GET({ url, params }) {
 			});
 		}
 		
-		console.log(review);
-		
 		return json({
 			success: true,
 			review: excludeTokenFromReview(await reviewWithOverallStars(review))

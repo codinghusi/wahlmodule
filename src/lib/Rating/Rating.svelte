@@ -33,7 +33,7 @@
 </script>
 
 <form class="rating rating-{size} {clazz}">
-	<input type="radio" bind:group={stars} bind:this={remover} disabled={disabled} value={0} name={name} class="hidden" />
+	<input type="radio" bind:group={stars} bind:this={remover} on:change={update} disabled={disabled} value={0} name={name} class="hidden" />
 
 	<input type="radio" bind:group={stars} on:change={update} disabled={disabled} value={1} name={name}
 				 class={radioClasses} />
