@@ -54,7 +54,7 @@
 
 
 <Spinner {loading} {showContent}>
-	{#if reviews.total === 0}
+	{#if total === 0}
 		<p class="mt-0">
 			Dieses Modul wurde noch nicht rezensiert.
 		</p>

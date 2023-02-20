@@ -7,6 +7,7 @@
 	export let explanation;
 	export let disabled = true;
 	export let tooltipDir = 'bottom';
+	export let size = undefined;
 	let clazz = '';
 	export { clazz as class };
 
@@ -22,7 +23,7 @@
 		<span class="label-text">{label}</span>
 		<span class="tooltip tooltip-{tooltipDir} underline cursor-help" data-tip={explanation}>?</span>
 	</div>
-	<Rating bind:stars {disabled} on:change={update} />
+	<Rating bind:stars {disabled} {size} on:change={update} />
 </li>
 
 <style>

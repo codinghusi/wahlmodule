@@ -4,6 +4,7 @@
 
 	export let stars = 0;
 	export let disabled = false;
+	export let size = 'md';
 	let name = 'rating';
 	let clazz = '';
 	export { clazz as class };
@@ -31,7 +32,7 @@
 	let remover;
 </script>
 
-<form class={`rating ${clazz}`}>
+<form class="rating rating-{size} {clazz}">
 	<input type="radio" bind:group={stars} bind:this={remover} disabled={disabled} value={0} name={name} class="hidden" />
 
 	<input type="radio" bind:group={stars} on:change={update} disabled={disabled} value={1} name={name}

@@ -27,8 +27,7 @@ Datenaufbereitung und –analyse. Hierzu werden die in Wissenschaft und
 Industrie verbreiteten Analyseumgebungen und –sprachen genutzt.
 
 **Eingangsvoraussetzungen:**
-* Grundlegende Kenntnisse in Python bzw. einer höheren
-* Programmiersprache
+* Grundlegende Kenntnisse in Python bzw. einer höheren Programmiersprache
 * Grundlagen der Statistik
 * Datenstrukturen
 * Grundlagen der Rechnerarchitektur

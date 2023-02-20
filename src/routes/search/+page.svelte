@@ -6,6 +6,12 @@
 	import Title from '../../lib/Title/Title.svelte';
 	import RatingList from '../../lib/Rating/RatingList.svelte';
 	import CrossedStar from '../../lib/icons/CrossedStar.svelte';
+	import Modal from '../../lib/Modal/Modal.svelte';
+	import ModalOpener from '../../lib/Modal/ModalOpener.svelte';
+	import ModalCloser from '../../lib/Modal/ModalCloser.svelte';
+	import ModuleList from './ModuleList.svelte';
+	import FilterModal from './FilterModal.svelte';
+	import SubtleXIcon from '../../lib/icons/SubtleXIcon.svelte';
 
 	let filters = [];
 	export let data;
@@ -19,17 +25,9 @@
 	// Aufzeichnungen, Vorlesung, Praktika, Übungen, Aufwand, Klausur
 </script>
 
-<!--<svelte:head>-->
-<!--	<title>Suche</title>-->
-<!--</svelte:head>-->
 <Title title="Übersicht" />
 
-<section>
-	<!--	<div class='prose text-center'>-->
-	<!--		<h1> Übersicht </h1>-->
-	<!--	</div>-->
-
-	<!--	<br />-->
+<section class="w-full max-w-lg">
 
 	<div class="flex gap-2">
 		<!-- Searchbar -->
@@ -42,57 +40,18 @@
 			</div>
 		</div>
 
-		<!-- Filter Selection -->
-		<label for="filter-modal" class="btn">
-			<FilterIcon />
-		</label>
+		<!-- Filter Button -->
+		<ModalOpener class="btn" name="filter-modal"> <FilterIcon /> </ModalOpener>
 
-		<!-- Filter Modal -->
-		<input type="checkbox" id="filter-modal" class="modal-toggle" />
-		<div class="modal">
-			<div class="modal-box">
-				<h3 class="font-bold text-lg">Filter</h3>
-				<ul class="flex flex-col gap-2">
-					{#each availableFilters as filter}
-						<li class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-							<input type="checkbox" />
-							<!-- Filter Header -->
-							<div class="collapse-title text-xl font-medium">
-								{filter.name}
-							</div>
-
-							<!-- Filter Values -->
-							<ul class="collapse-content">
-								{#each filter.values as value}
-									<li class="form-control text-left">
-										<label class="label cursor-pointer">
-											<span class="label-text">{value.fullName}</span>
-											<input type="checkbox" class="toggle" bind:group={filters} value={value} />
-										</label>
-									</li>
-								{/each}
-							</ul>
-						</li>
-					{/each}
-				</ul>
-
-				<div class="modal-action">
-					<label for="filter-modal" class="btn">Let's go</label>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<!-- Filters enabled -->
 	<ul class="flex gap-2 mt-2">
 		{#each filters as filter}
 			<li class="badge badge-secondary gap-2">
-				<!-- X Icon -->
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-						 class="inline-block w-4 h-4 stroke-current">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-								d="M6 18L18 6M6 6l12 12"></path>
-				</svg>
+				<button class="cursor-pointer flex items-center">
+					<SubtleXIcon />
+				</button>
 
 				{filter.badge}
 			</li>
@@ -102,39 +61,8 @@
 	<br />
 
 	<!-- Modules -->
-	<ul class="flex flex-col gap-6">
-		{#each modules as module}
-			<li class="card w-96 bg-base-100 shadow-xl gap-2 flex-col flex">
-				<div class="card-body collapse collapse-arrow p-2 gap-0">
-					<input type="checkbox">
-
-					<div class="card-title flex justify-between collapse-title">
-						<h2> {module.name} </h2>
-						{#if (module.rated)}
-							<Rating stars={module.overallStars} disabled={true} />
-						{:else}
-							<CrossedStar />
-						{/if}
-					</div>
-
-					<div class="collapse-content flex flex-col">
-						<div class="divider mt-0"></div>
-
-						{#if (module.rated)}
-							<RatingList ratings={module.specificRatings} />
-						{:else}
-							<p>Dieses Modul hat noch zu wenig Bewertungen</p>
-						{/if}
-						<br />
-						<div class="card-actions justify-end">
-							<a class="btn btn-primary" href={`/module/${module.short.toLowerCase()}`}>Ansehen</a>
-						</div>
-					</div>
-
-
-				</div>
-			</li>
-		{/each}
-	</ul>
+	<ModuleList {modules} />
 
 </section>
+
+<FilterModal {availableFilters} bind:filters />

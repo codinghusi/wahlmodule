@@ -30,6 +30,9 @@ export async function GET({ url, params }) {
 		});
 		
 		const count = await prisma.review.aggregate({
+			where: {
+				moduleShort
+			},
 			_count: true
 		});
 		

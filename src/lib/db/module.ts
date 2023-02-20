@@ -4,7 +4,7 @@ import { prisma } from '../Data/client';
 type Module = any;
 
 export async function modulesWithRatings(modules: Module[]) {
-	return Promise.all(modules.map(module => moduleWithRating(prisma, module)));
+	return Promise.all(modules.map(module => moduleWithRating(module)));
 }
 
 export async function moduleWithRating(module: Module) {

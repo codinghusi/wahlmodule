@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/*[type=radio] {*/
-/*    @apply [type=checkbox];*/
-/*}*/
+.rating-lg input {
+    width: 2rem;
+    height: 2rem;
+}

@@ -12,5 +12,6 @@ module.exports = {
   safelist: [
       'tooltip-left', 'tooltip-right',
       'alert-info', 'alert-success', 'alert-error',
+      'rating-xs', 'rating-sm', 'rating-md', 'rating-lg'
   ],
 }

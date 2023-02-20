@@ -9,7 +9,7 @@
 
 	<br />
 
-	<main class="mt-4 mx-auto p-1">
+	<main class="mt-4 p-1 flex justify-center">
 		<slot />
 	</main>
 

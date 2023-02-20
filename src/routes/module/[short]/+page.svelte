@@ -26,7 +26,7 @@
 
 <Title title={`Modul: ${module.name}`} />
 
-<section class="prose">
+<section class="prose prose-h2:text-3xl">
 
 	<!-- Description -->
 	<article>
@@ -39,8 +39,8 @@
 	{#if module.rated}
 		<article>
 			<h2 class="w-full flex justify-between">
-				Bewertungen
-				<Rating stars={module.overallStars} disabled={true} class="self-center" />
+				Bewertung
+				<Rating stars={module.overallStars} disabled={true} class="self-center" size="lg" />
 			</h2>
 
 			<RatingList class="flex justify-center items-center" ratings={module.specificRatings} />
