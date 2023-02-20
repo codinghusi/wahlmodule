@@ -43,6 +43,6 @@ export async function GET({ url, params }) {
 		});
 	} catch (e) {
 		console.error(e);
-		return json({ error: 'invalid body' });
+		return json({ success: false, error: 'invalid body' });
 	}
 }

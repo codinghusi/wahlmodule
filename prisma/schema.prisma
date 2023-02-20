@@ -3,7 +3,7 @@
 
 generator client {
     provider = "prisma-client-js"
-    previewFeatures = ["filteredRelationCount"]
+    previewFeatures = ["filteredRelationCount", "fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -26,6 +26,9 @@ model Module {
     reviews        Review[]
     dependencies   Module[]        @relation("ModuleDepends")
     dependencyTo   Module[]        @relation("ModuleDepends")
+
+    @@fulltext([name])
+    @@fulltext([description])
 }
 
 // Semesterzeit
@@ -45,7 +48,8 @@ model DegreeProgram {
 
 // Schwerpunkt
 model Focus {
-    name    String   @id
+    id      Int      @id
+    name    String   @unique
     modules Module[]
 }
 
@@ -61,7 +65,7 @@ model Lecturer {
 }
 
 model Rating {
-    id          Int              @id
+    id          Int                 @id @default(autoincrement())
     label       String
     explanation String
     reviews     RatingOfReview[]

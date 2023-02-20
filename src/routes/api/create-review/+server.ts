@@ -41,7 +41,7 @@ export async function POST({ request }) {
 		});
 	} catch (e) {
 		console.error(e);
-		return json({ error: 'invalid body' });
+		return json({ success: false, error: 'invalid body' });
 	}
 	
 	

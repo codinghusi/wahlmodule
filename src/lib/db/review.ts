@@ -1,6 +1,5 @@
 import { prisma } from '../Data/client';
-
-type Review = any;
+import type { Review } from '@prisma/client';
 
 export async function reviewWithOverallStars(review: Review) {
 	const avg = await prisma.ratingOfReview.aggregate({

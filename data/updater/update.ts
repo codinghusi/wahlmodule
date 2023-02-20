@@ -29,7 +29,7 @@ exec('echo \'schabernack\'', async (error, stdout) => {
 	const commit = getLastHash();
 	
 	await updateByFile(commit, ratingsFile, 'id', 'rating', true);
-	await updateByFile(commit, focusesFile, 'name', 'focus');
+	await updateByFile(commit, focusesFile, 'name', 'focus', true);
 	await updateByFile(commit, lecturersFile, 'short', 'lecturer');
 	await updateByFile(commit, degreeProgramsFile, 'short', 'degreeProgram');
 	await updateModules(commit);

@@ -1,11 +1,13 @@
 import { modulesWithRatings } from '../../lib/db/module';
 import { prisma } from '../../lib/Data/client';
+import { getFilters } from './filters';
+import { MAX_PAGE_SIZE_MODULES } from '../../lib/Data/definitions';
 
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-	const modules = await prisma.module.findMany();
+
 	return {
-		modules: await modulesWithRatings(modules)
+		availableFilters: await getFilters()
 	};
 }
