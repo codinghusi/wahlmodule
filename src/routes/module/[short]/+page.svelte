@@ -3,15 +3,46 @@
 	import ModalOpener from '../../../lib/Modal/ModalOpener.svelte';
 	import Title from '../../../lib/Title/Title.svelte';
 	import FlagAReviewModal from './FlagAReviewModal.svelte';
-	import ArrowRight from '../../../lib/icons/ArrowRight.svelte';
-	import CreateAReviewModal from './CreateAReviewModal.svelte';
 	import Description from './Description.svelte';
-	import Reviews from './Reviews.svelte';
 	import RatingList from '../../../lib/Rating/RatingList.svelte';
+	import { onMount } from 'svelte';
+	import { getReview } from '../../api/calls';
+	import ReviewList from './ReviewList.svelte';
+	import ReviewFormModal from './ReviewFormModal.svelte';
+	import { errorMessage } from '../../../lib/Message/MessageStore';
 
 	export let data;
 	let module, possibleRating, openReviewModal;
 	$: ({ module, possibleRating, openReviewModal } = data);
+
+
+	// load existing review
+	let review = null;
+
+	function storageKey(key) {
+		return `module-review-${module.short}-${key}`;
+	}
+
+	function storageGet(key) {
+		return localStorage.getItem(storageKey(key)) ?? null;
+	}
+
+	function storageSet(key, value) {
+		localStorage.setItem(storageKey(key), value);
+	}
+
+	onMount(async () => {
+		const id = storageGet('id');
+		if (id) {
+			const response = await getReview(id).catch(() => ({ success: false }));
+			if (response.success) {
+				review = response.review;
+				review.editToken = storageGet('editToken');
+			}
+			// TODO: maybe add an error message
+		}
+	});
+
 
 	let reviewModal;
 	$: if (openReviewModal) {
@@ -19,8 +50,17 @@
 	}
 
 	let reviews;
-	function submit() {
-		reviews.reload();
+
+	async function submit(e) {
+		const r = e.detail.review;
+		storageSet("id", r.id);
+		storageSet("editToken", r.editToken);
+		const freshReview = (await getReview(r.id)).review;
+		if (!freshReview) {
+			errorMessage("Das dargestellte Review von dir könnte fehlerhaft sein. Lade die Seite neu.")
+		} else {
+			review = { ...r, ...freshReview };
+		}
 	}
 </script>
 
@@ -52,14 +92,20 @@
 		<h2 class="flex flex-wrap gap-4 justify-between">
 			Rezensionen
 			<ModalOpener class="btn btn-secondary" name="create-review">
-				Bewerten <ArrowRight />
+				{#if review}
+					Bearbeiten
+				{:else}
+					Bewerten
+				{/if}
 			</ModalOpener>
 		</h2>
 
-		<Reviews {module} bind:this={reviews} />
+
+
+		<ReviewList {module} bind:this={reviews} hide={review} ownedReview={review} />
 
 	</article>
 </section>
 
 <FlagAReviewModal name="flag" {module} />
-<CreateAReviewModal name="create-review" {possibleRating} {module} bind:this={reviewModal} on:submit={submit} />
+<ReviewFormModal name="create-review" {possibleRating} {module} bind:this={reviewModal} ownedReview={review} on:submit={submit} />

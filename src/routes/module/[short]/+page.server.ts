@@ -1,5 +1,5 @@
-import { moduleWithRating } from '../../../lib/db/module';
-import { reviewWithOverallStars } from '../../../lib/db/review';
+import { moduleWithRating } from '../../api/modules/module';
+import { reviewWithOverallStars } from '../../api/reviews/review';
 import { prisma } from '../../../lib/Data/client';
 
 /** @type {import('./$types').PageLoad} */

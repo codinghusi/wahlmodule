@@ -1,7 +1,6 @@
-import { average } from '../helper';
-import { prisma } from '../Data/client';
-
-type Module = any;
+import { average } from '../../../lib/helper';
+import { prisma } from '../../../lib/Data/client';
+import type { Module } from '@prisma/client';
 
 export async function modulesWithRatings(modules: Module[]) {
 	return Promise.all(modules.map(module => moduleWithRating(module)));

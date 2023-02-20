@@ -1,16 +1,16 @@
 import { json } from '@sveltejs/kit';
-import { MAX_PAGE_SIZE_REVIEWS } from '../../../../../lib/Data/definitions';
-import { reviewsWithOverallStars } from '../../../../../lib/db/review';
-import { prisma } from '../../../../../lib/Data/client';
+import { MAX_PAGE_SIZE_REVIEWS } from '../../../../lib/Data/definitions';
+import { excludeTokenFromReview, excludeTokenFromReviews, reviewsWithOverallStars } from '../review';
+import { prisma } from '../../../../lib/Data/client';
 
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ url, params }) {
+export async function GET({ url }) {
 	try {
-		// const { moduleShort, pageSize, pageIndex } = request.searchParams;
-		const moduleShort = params.short;
+		const moduleShort = url.searchParams.get('moduleShort');
 		const pageSize = parseInt(url.searchParams.get('pageSize'));
 		const pageIndex = parseInt(url.searchParams.get('pageIndex'));
+		const withoutReviewId = parseInt(url.searchParams.get('without'));
 		
 		if (pageSize > MAX_PAGE_SIZE_REVIEWS) {
 			return json({ success: false, error: 'pageSize to big, max: ' + MAX_PAGE_SIZE_REVIEWS });
@@ -21,7 +21,12 @@ export async function GET({ url, params }) {
 		}
 		
 		const reviews = await prisma.review.findMany({
-			where: { moduleShort },
+			where: {
+				moduleShort,
+				NOT: {
+					id: withoutReviewId
+				}
+			},
 			orderBy: {
 				createdAt: 'desc'
 			},
@@ -38,7 +43,7 @@ export async function GET({ url, params }) {
 		
 		return json({
 			success: true,
-			reviews: await reviewsWithOverallStars(reviews),
+			reviews: excludeTokenFromReviews(await reviewsWithOverallStars(reviews)),
 			total: count._count
 		});
 	} catch (e) {

@@ -1,4 +1,4 @@
-import { modulesWithRatings } from '../../lib/db/module';
+import { modulesWithRatings } from '../api/modules/module';
 import { prisma } from '../../lib/Data/client';
 import { getFilters } from './filters';
 import { MAX_PAGE_SIZE_MODULES } from '../../lib/Data/definitions';

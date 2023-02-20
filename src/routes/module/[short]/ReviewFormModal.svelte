@@ -10,10 +10,23 @@
 	import { createEventDispatcher } from 'svelte';
 	import { createReview } from '../../api/calls';
 	import { errorMessage, successMessage } from '../../../lib/Message/MessageStore';
+	import { Review } from '@prisma/client';
 
 	export let name;
 	export let possibleRating;
 	export let module;
+	export let ownedReview = null;
+
+	$: updateValues(ownedReview);
+
+	function updateValues(review) {
+		if (!review) {
+			return;
+		}
+		authorName = review.authorName;
+		reviewText = review.text;
+		ratings = review.ratings.map(rating => ({ stars: rating.stars, ...rating.rating }));
+	}
 
 	let dispatch = createEventDispatcher();
 
@@ -32,6 +45,7 @@
 
 	let reviewText = '';
 	let submitEnabled;
+	let loading = false;
 
 	let form;
 	let closer;
@@ -44,25 +58,24 @@
 	}
 
 	async function submit() {
-		let failed = false;
+		loading = true;
 		const response = await createReview({
+			id: ownedReview?.id,
+			editToken: ownedReview?.editToken,
 			moduleShort: module.short,
 			authorName,
 			text: reviewText,
 			ratings: ratings
 				.filter(rating => rating.stars > 0)
 				.map(rating => ({ id: rating.id, stars: rating.stars }))
-		}).catch(() => failed = true);
+		}).catch(() => ({ success: false }));
+		loading = false;
 
-		if (!response?.success || failed) {
+		if (!response?.success) {
 			errorMessage("Es ist ein Fehler aufgetreten. Versuche es später noch einmal.");
 			return;
 		}
 
-		// Reset form
-		reviewText = '';
-		authorName = '';
-		initRatings();
 		dispatch('submit', { review: response.review });
 		closer.close();
 		successMessage("Bewertung erfolgreich abgesendet!");
@@ -103,8 +116,12 @@
 			<ModalCloser class="btn btn-ghost" name={name} bind:this={closer}>
 				Abbrechen
 			</ModalCloser>
-			<button class="btn btn-primary" disabled={!submitEnabled} name={name} on:click={submit}>
+			<button class="btn btn-primary" class:loading disabled={!submitEnabled} name={name} on:click={submit}>
+				{#if ownedReview?.editToken}
+					Bearbeiten
+				{:else}
 					Absenden
+				{/if}
 			</button>
 		</span>
 </Modal>

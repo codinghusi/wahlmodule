@@ -1,4 +1,4 @@
-import { prisma } from '../Data/client';
+import { prisma } from '../../../lib/Data/client';
 import type { Review } from '@prisma/client';
 
 export async function reviewWithOverallStars(review: Review) {
@@ -19,4 +19,13 @@ export async function reviewWithOverallStars(review: Review) {
 
 export async function reviewsWithOverallStars(reviews: Review[]) {
 	return Promise.all(reviews.map(review => reviewWithOverallStars(review)));
+}
+
+export function excludeTokenFromReview(review: Review) {
+	delete review.editToken;
+	return review;
+}
+
+export function excludeTokenFromReviews(reviews: Review[]) {
+	return reviews.map(excludeTokenFromReview);
 }

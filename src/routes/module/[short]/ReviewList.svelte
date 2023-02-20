@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ModalOpener from '../../../lib/Modal/ModalOpener.svelte';
-	import ArrowRight from '../../../lib/icons/ArrowRight.svelte';
 	import Rating from '../../../lib/Rating/Rating.svelte';
 	import Modal from '../../../lib/Modal/Modal.svelte';
 	import FlagIcon from '../../../lib/icons/FlagIcon.svelte';
@@ -10,8 +9,11 @@
 	import { getReviews } from '../../api/calls';
 	import { onMount } from 'svelte';
 	import { errorMessage } from '../../../lib/Message/MessageStore';
+	import Review from './Review.svelte';
 
 	export let module;
+	export let review = null;
+	export let ownedReview = null;
 	let currentReview = null;
 
 	let loading = true;
@@ -23,7 +25,7 @@
 
 	async function loadReviews(page): Promise<boolean> {
 		loading = true;
-		const response = await getReviews(module.short, page, pageSize).catch(() => ({ success: false }));
+		const response = await getReviews(module.short, review, page, pageSize).catch(() => ({ success: false }));
 		if (response.success) {
 			loading = false;
 			showContent = true;
@@ -60,33 +62,19 @@
 		</p>
 	{:else}
 
+		{#if ownedReview}
+			<p class="font-bold">Deine Rezension:</p>
+			<Review review={ownedReview} modalName="create-review" />
+			<p class="font-bold">Andere Rezensionen:</p>
+		{/if}
+
 		<div class="flex justify-center items-center">
 			<Pagination bind:page {pageSize} {total} on:change={pageChange} />
 		</div>
 
 		<ul class="flex flex-wrap gap-x-8 gap-y-2 not-prose">
 			{#each reviews as review}
-				<li class="card w-full bg-base-100 shadow-xl">
-
-					<ModalOpener class="card-body cursor-pointer" name="review" on:click={() => currentReview = review}>
-						<div class="flex">
-							<div class="flex-1">
-								<div class="card-title font-bold text-base m-0 mb-2 flex justify-between">
-									<span>Von {review.authorName ?? '<Anonym>'}</span>
-									<Rating stars={review.overallStars} disabled={true} />
-								</div>
-								<!-- The Review (short) -->
-								<p class="text-base text-justify m-0">
-									{(review.text.length > 103) ? (review.text.slice(0, 100) + "...") : (review.text)}
-								</p>
-							</div>
-							<div class="flex justify-center items-center ml-8">
-								<ArrowRight />
-							</div>
-						</div>
-					</ModalOpener>
-
-				</li>
+				<Review {review} bind:currentReview />
 			{/each}
 		</ul>
 	{/if}

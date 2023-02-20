@@ -4,7 +4,7 @@ import { prisma } from '../../../lib/Data/client';
 import { Season } from '@prisma/client';
 import { FilterType } from '../../search/definitions';
 import type { Filter } from '../../search/definitions';
-import { modulesWithRatings } from '../../../lib/db/module';
+import { modulesWithRatings } from './module';
 
 export async function GET({ url, params }) {
 	try {
