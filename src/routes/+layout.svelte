@@ -4,7 +4,7 @@
 	import MessageList from '../lib/Message/MessageList.svelte';
 </script>
 
-<div class="flex flex-col justify-center">
+<div class="flex flex-col justify-center w-screen">
 	<Header />
 
 	<br />

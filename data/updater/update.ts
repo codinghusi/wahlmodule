@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { exec } from 'node:child_process';
-import * as path from 'path';
+import Path, * as path from 'path';
 import { PrismaClient, Season } from '@prisma/client';
 import { parse } from './parser';
 import { execSync } from 'child_process';
@@ -52,7 +52,13 @@ async function updateByFile<T>(commit: string, fileName: string, idKey: keyof T,
 		}));
 		const commands = [];
 		if (deleteAll) {
-			commands.push((prisma[model] as any).deleteMany());
+			commands.push((prisma[model] as any).deleteMany({
+				where: {
+					NOT: {
+						[idKey]: { in: entries.map(entry => entry[idKey])}
+					}
+				}
+			}));
 		}
 		commands.push(...upserts.map(upsert => (prisma[model] as any).upsert(upsert)));
 		prisma.$transaction(commands);
@@ -73,7 +79,7 @@ async function updateModules(commit: string) {
 					...parsed,
 					season,
 					short: parsed.short.toLowerCase(),
-					fileName: file.filename
+					fileName: Path.basename(file.filename)
 				};
 				const update = Object.fromEntries((
 					await Promise.all(Object
@@ -130,7 +136,7 @@ async function updateModules(commit: string) {
 			}
 		} else if (file.type === DiffType.Deleted) {
 			try {
-				deletes.push(file.filename);
+				deletes.push(Path.basename(file.filename));
 			} catch (e) {
 				console.error(e);
 			}
@@ -151,16 +157,18 @@ async function updateModules(commit: string) {
 	);
 	
 	await prisma.$transaction(
-		updates.map((update, i) => prisma.module.upsert({
+		[
+			...updates.map((update, i) => prisma.module.upsert({
 				where: {
 					short: update.short
 				},
 				update: update,
 				create: creates[i] as any
-			})
-		)
+			})),
+			
+			prisma.module.deleteMany({ where: { fileName: { in: deletes } } })
+		]
 	);
-	await prisma.module.deleteMany({ where: { fileName: { in: deletes } } });
 }
 
 function updateHash() {

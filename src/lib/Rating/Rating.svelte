@@ -1,11 +1,12 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import XIcon from '../icons/XIcon.svelte';
+	import { infoMessage } from '../Message/MessageStore';
 
 	export let stars = 0;
 	export let disabled = false;
 	export let size = 'md';
-	let name = 'rating';
+	export let name;
 	let clazz = '';
 	export { clazz as class };
 
@@ -29,11 +30,16 @@
 		}
 	}
 
+	function remove() {
+		remover.click();
+		update();
+	}
+
 	let remover;
 </script>
 
-<form class="rating rating-{size} {clazz}">
-	<input type="radio" bind:group={stars} bind:this={remover} on:change={update} disabled={disabled} value={0} name={name} class="hidden" />
+<div class="rating rating-{size} {clazz}">
+	<input type="radio" bind:group={stars} bind:this={remover} on:change={update} disabled={disabled} value={0} name={name} class="rating-hidden" />
 
 	<input type="radio" bind:group={stars} on:change={update} disabled={disabled} value={1} name={name}
 				 class={radioClasses} />
@@ -46,8 +52,8 @@
 	<input type="radio" bind:group={stars} on:change={update} disabled={disabled} value={5} name={name}
 				 class={radioClasses} />
 
-	<label class={`cursor-pointer ml-2 ${stars > 0 && !disabled ? '' : 'hidden'}`} on:click={() => remover.click()}>
+	<label class={`cursor-pointer ml-2 ${stars > 0 && !disabled ? '' : 'hidden'}`} on:click={remove}>
 		<XIcon />
 	</label>
 
-</form>
+</div>

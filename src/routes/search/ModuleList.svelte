@@ -57,7 +57,7 @@
 						<div class="card-title flex justify-between collapse-title">
 							<h2> {module.name} </h2>
 							{#if (module.rated)}
-								<Rating stars={module.overallStars} disabled={true} />
+								<Rating stars={module.overallStars} disabled={true} name="module-{module.short}" />
 							{:else}
 								<CrossedStar />
 							{/if}

@@ -1,7 +1,7 @@
 <script>
 	import ModalOpener from '../../../lib/Modal/ModalOpener.svelte';
 	import Rating from '../../../lib/Rating/Rating.svelte';
-	import ArrowRight from '../../../lib/icons/ArrowRight.svelte';
+	import ArrowRightIcon from '../../../lib/icons/ArrowRightIcon.svelte';
 
 	export let review;
 	export let currentReview = null;
@@ -15,7 +15,7 @@
 			<div class="flex-1">
 				<div class="card-title font-bold text-base m-0 mb-2 flex justify-between">
 					<span>Von {review.authorName ?? '<Anonym>'}</span>
-					<Rating stars={review.overallStars} disabled={true} />
+					<Rating stars={review.overallStars} disabled={true} name="review-{review.id}" />
 				</div>
 
 				<!-- The Review (shortened) -->
@@ -24,7 +24,7 @@
 				</p>
 			</div>
 			<div class="flex justify-center items-center ml-8">
-				<ArrowRight />
+				<ArrowRightIcon />
 			</div>
 		</div>
 	</ModalOpener>

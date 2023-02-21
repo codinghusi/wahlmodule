@@ -78,7 +78,7 @@
 			return;
 		}
 
-		successMessage("Bewertung erfolgreich abgesendet!");
+		successMessage("Bewertung erfolgreich abgesendet! Lade die Seite neu, um die Auswirkung auf die Sterne zu sehen.");
 
 		dispatch('submit', { review: response.review });
 		closer.close();

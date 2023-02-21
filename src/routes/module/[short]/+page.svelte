@@ -2,7 +2,6 @@
 	import Rating from '../../../lib/Rating/Rating.svelte';
 	import ModalOpener from '../../../lib/Modal/ModalOpener.svelte';
 	import Title from '../../../lib/Title/Title.svelte';
-	import FlagAReviewModal from './FlagAReviewModal.svelte';
 	import Description from './Description.svelte';
 	import RatingList from '../../../lib/Rating/RatingList.svelte';
 	import { onMount } from 'svelte';
@@ -10,11 +9,12 @@
 	import ReviewList from './ReviewList.svelte';
 	import ReviewFormModal from './ReviewFormModal.svelte';
 	import { errorMessage } from '../../../lib/Message/MessageStore';
+	import EditIcon from '../../../lib/icons/EditIcon.svelte';
+	import { GITHUB_LINK } from '../../../lib/Data/definitions';
 
 	export let data;
 	let module, possibleRating, openReviewModal;
 	$: ({ module, possibleRating, openReviewModal } = data);
-
 
 	// load existing review
 	let review = null;
@@ -70,7 +70,12 @@
 
 	<!-- Description -->
 	<article>
-		<h2 class="mt-0">Beschreibung</h2>
+		<h2 class="mt-0 flex justify-between">
+			Beschreibung
+			<a class="btn btn-ghost" href="{GITHUB_LINK}/edit/main/data/modules/{module.filename}">
+				<EditIcon />
+			</a>
+		</h2>
 		<Description {module} />
 	</article>
 
@@ -80,7 +85,7 @@
 		<article>
 			<h2 class="w-full flex justify-between">
 				Bewertung
-				<Rating stars={module.overallStars} disabled={true} class="self-center" size="lg" />
+				<Rating stars={module.overallStars} disabled={true} class="self-center" size="lg" name="overall-rating" />
 			</h2>
 
 			<RatingList class="flex justify-center items-center" ratings={module.specificRatings} />
@@ -102,10 +107,9 @@
 
 
 
-		<ReviewList {module} bind:this={reviews} hide={review} ownedReview={review} />
+		<ReviewList {module} bind:this={reviews} ownedReview={review} />
 
 	</article>
 </section>
 
-<FlagAReviewModal name="flag" {module} />
 <ReviewFormModal name="create-review" {possibleRating} {module} bind:this={reviewModal} ownedReview={review} on:submit={submit} />

@@ -2,6 +2,7 @@
 	import Rating from './Rating.svelte';
 	import { createEventDispatcher } from 'svelte';
 
+	export let name;
 	export let label;
 	export let stars;
 	export let explanation;
@@ -23,7 +24,7 @@
 		<span class="label-text">{label}</span>
 		<span class="tooltip tooltip-{tooltipDir} underline cursor-help" data-tip={explanation}>?</span>
 	</div>
-	<Rating bind:stars {disabled} {size} on:change={update} />
+	<Rating bind:stars {disabled} {size} on:change={update} {name} />
 </li>
 
 <style>

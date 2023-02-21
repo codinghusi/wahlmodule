@@ -7,7 +7,8 @@ module.exports = {
 	daisyui: {
 		themes: true,
 		lightTheme: 'bumblebee',
-		darkTheme: 'night'
+		darkTheme: 'bumblebee'
+		// darkTheme: 'night'
 	},
 	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 	safelist: [

@@ -3,3 +3,5 @@ export const AUTHOR_NAME_MIN_LENGTH = 3;
 export const MIN_RATING_COUNT = 3;
 export const MAX_PAGE_SIZE_REVIEWS = 5;
 export const MAX_PAGE_SIZE_MODULES = 10;
+
+export const GITHUB_LINK = "https://github.com/codinghusi/wahlmodule";

@@ -5,16 +5,25 @@
 	import FlagIcon from '../../../lib/icons/FlagIcon.svelte';
 	import Spinner from '../../../lib/Data/Spinner.svelte';
 	import Pagination from '../../../lib/Data/Pagination.svelte';
-	import { MAX_PAGE_SIZE_REVIEWS } from '../../../lib/Data/definitions';
+	import { GITHUB_LINK, MAX_PAGE_SIZE_REVIEWS } from '../../../lib/Data/definitions';
 	import { getReviews } from '../../api/calls';
 	import { onMount } from 'svelte';
 	import { errorMessage } from '../../../lib/Message/MessageStore';
 	import Review from './Review.svelte';
 
 	export let module;
-	export let review = null;
 	export let ownedReview = null;
 	let currentReview = null;
+	let modalCloseText;
+
+	$: if (currentReview) modalCloseText = ["Nice :)", "Danke :D", "Fresh!", "Geil!"][Math.round(Math.random()*3)]
+
+	let reportHref = "";
+	$: if (currentReview) {
+		reportHref = `${GITHUB_LINK}/issues/new?title=${encodeURIComponent('Meldung einer Rezension')}`
+		+ `&body=${encodeURIComponent(`# Rezension  \n**Rezension ID: ${currentReview.id}**  \n**Inhalt**: ${currentReview.text}  \n# Begründung:  \n<Warum ist diese Rezension problematisch?>`)}`
+		+ `&labels=Report`;
+	}
 
 	let loading = true;
 	let showContent = false;
@@ -25,7 +34,7 @@
 
 	async function loadReviews(page): Promise<boolean> {
 		loading = true;
-		const response = await getReviews(module.short, review, page, pageSize).catch(() => ({ success: false }));
+		const response = await getReviews(module.short, ownedReview?.id, page, pageSize).catch(() => ({ success: false }));
 		if (response.success) {
 			loading = false;
 			showContent = true;
@@ -81,11 +90,11 @@
 </Spinner>
 
 
-<Modal name="review" closeText="Nice!">
+<Modal name="review" closeText={modalCloseText}>
 	{#if currentReview !== null}
 		<div class="flex justify-between">
 			<span class="font-bold">Von {currentReview.authorName ?? '<Anonym>'}</span>
-			<Rating stars={currentReview.overallStars} disabled={true} />
+			<Rating stars={currentReview.overallStars} disabled={true} name="rating-in-modal"/>
 		</div>
 
 		<!-- The Review (full) -->
@@ -95,9 +104,8 @@
 	{/if}
 
 	<span slot="actions" class="flex-1">
-		<ModalOpener class="btn btn-error" name="flag" disabled>
+		<a class="btn btn-ghost text-error" target="_blank" href={reportHref}>
 			<FlagIcon />
-			Melden
-		</ModalOpener>
+		</a>
 	</span>
 </Modal>

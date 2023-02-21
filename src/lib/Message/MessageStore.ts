@@ -17,7 +17,7 @@ export function addMessage(message: string, type: MessageType, duration = -1) {
 	messageStore.update(data => {
 		const id = data.lastId + 1;
 		if (duration > 0) {
-			setTimeout(() => removeMessage(id));
+			setTimeout(() => removeMessage(id), duration);
 		}
 		return {
 			lastId: id,

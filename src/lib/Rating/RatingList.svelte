@@ -19,6 +19,7 @@
 			stars={rating.stars}
 			explanation={rating.explanation}
 			{disabled}
-			on:change={e => rating.stars = e.detail.stars} />
+			on:change={e => rating.stars = e.detail.stars}
+			name="rating-{rating.id}" />
 	{/each}
 </ul>
