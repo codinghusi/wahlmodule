@@ -4,14 +4,17 @@
 	import MessageList from '../lib/Message/MessageList.svelte';
 </script>
 
-<div class="flex flex-col justify-center">
+<div class="flex flex-col">
 	<Header />
 
 	<br />
 
-	<main class="mt-4 p-1 flex justify-center">
-		<slot />
-	</main>
+	<div class="mt-4 p-1 flex justify-center">
+		<main class="max-w-2xl">
+			<slot />
+		</main>
+	</div>
+
 
 	<MessageList />
 </div>
