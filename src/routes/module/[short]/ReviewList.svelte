@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 	import { errorMessage } from '../../../lib/Message/MessageStore';
 	import Review from './Review.svelte';
+	import UserIcon from '../../../lib/icons/UserIcon.svelte';
 
 	export let module;
 	export let ownedReview = null;
@@ -97,7 +98,10 @@
 <Modal name="review" closeText={modalCloseText}>
 	{#if currentReview !== null}
 		<div class="flex justify-between">
-			<span class="font-bold">Von {currentReview.authorName ?? '<Anonym>'}</span>
+			<span class="font-bold flex gap-2">
+				<UserIcon />
+				{currentReview.authorName ?? '<Anonym>'}
+			</span>
 			<Rating stars={currentReview.overallStars} disabled={true} name="rating-in-modal" />
 		</div>
 

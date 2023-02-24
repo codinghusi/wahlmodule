@@ -66,11 +66,10 @@
 
 <Title title={`Modul: ${module.name}`} />
 
-<section class="prose prose-h2:text-3xl">
-
+<section class="flex flex-col gap-12">
 	<!-- Description -->
 	<article>
-		<h2 class="mt-0 flex justify-between">
+		<h2 class="h2 mt-0 flex justify-between">
 			Beschreibung
 			<a class="btn btn-ghost" target="_blank" href="{GITHUB_LINK}/edit/main/data/modules/{module.fileName ?? module.fileName}">
 				<EditIcon />
@@ -83,7 +82,7 @@
 	<!-- Ratings -->
 	{#if module.rated}
 		<article>
-			<h2 class="w-full flex justify-between flex-wrap">
+			<h2 class="h2 w-full flex justify-between flex-wrap">
 				Bewertung
 				<Rating stars={module.overallStars} disabled={true} class="self-center" size="lg" name="overall-rating" />
 			</h2>
@@ -94,9 +93,9 @@
 
 	<!-- Reviews -->
 	<article>
-		<h2 class="flex flex-wrap gap-4 justify-between">
+		<h2 class="h2 flex flex-wrap gap-4 justify-between">
 			Rezensionen
-			<ModalOpener class="btn" name="create-review">
+			<ModalOpener class="btn max-sm:mb-4" name="create-review">
 				{#if review}
 					Bearbeiten
 				{:else}
@@ -113,3 +112,9 @@
 </section>
 
 <ReviewFormModal name="create-review" {possibleRating} {module} bind:this={reviewModal} ownedReview={review} on:submit={submit} />
+
+<style>
+	.h2 {
+		@apply text-3xl font-bold mt-6 mb-2;
+	}
+</style>

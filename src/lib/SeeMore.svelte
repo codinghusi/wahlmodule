@@ -40,14 +40,13 @@
 
 <style>
     .container {
-        @apply relative pb-12;
+        @apply relative;
     }
 
     .button {
 		@apply flex gap-3;
 		@apply btn btn-ghost;
 		@apply w-full h-12;
-		bottom: -100%;
 	}
 
 </style>
