@@ -72,7 +72,7 @@
 	<article>
 		<h2 class="mt-0 flex justify-between">
 			Beschreibung
-			<a class="btn btn-ghost" href="{GITHUB_LINK}/edit/main/data/modules/{module.filename}">
+			<a class="btn btn-ghost" href="{GITHUB_LINK}/edit/main/data/modules/{module.fileName ?? module.fileName}">
 				<EditIcon />
 			</a>
 		</h2>
