@@ -31,7 +31,7 @@
 	}
 
 	function remove() {
-		remover.click();
+		stars = 0;
 		update();
 	}
 
