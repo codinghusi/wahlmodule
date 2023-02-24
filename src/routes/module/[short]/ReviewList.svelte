@@ -16,13 +16,13 @@
 	let currentReview = null;
 	let modalCloseText;
 
-	$: if (currentReview) modalCloseText = ["Nice :)", "Danke :D", "Fresh!", "Geil!"][Math.round(Math.random()*3)]
+	$: if (currentReview) modalCloseText = ['Nice :)', 'Danke :D', 'Fresh!', 'Geil!'][Math.round(Math.random() * 3)];
 
-	let reportHref = "";
+	let reportHref = '';
 	$: if (currentReview) {
 		reportHref = `${GITHUB_LINK}/issues/new?title=${encodeURIComponent('Meldung einer Rezension')}`
-		+ `&body=${encodeURIComponent(`# Rezension  \n**Rezension ID: ${currentReview.id}**  \n**Inhalt**: ${currentReview.text}  \n# Begründung:  \n<Warum ist diese Rezension problematisch?>`)}`
-		+ `&labels=Report`;
+			+ `&body=${encodeURIComponent(`# Rezension  \n**Rezension ID: ${currentReview.id}**  \n**Inhalt**: ${currentReview.text}  \n# Begründung:  \n<Warum ist diese Rezension problematisch?>`)}`
+			+ `&labels=Report`;
 	}
 
 	let loading = true;
@@ -31,6 +31,8 @@
 	let total = 0;
 	let reviews = [];
 	const pageSize = MAX_PAGE_SIZE_REVIEWS;
+
+	$: ownedReview !== null && loadReviews(page);
 
 	async function loadReviews(page): Promise<boolean> {
 		loading = true;
@@ -74,7 +76,9 @@
 		{#if ownedReview}
 			<p class="font-bold text-lg">Deine Rezension:</p>
 			<Review review={ownedReview} modalName="create-review" />
-			<p class="font-bold mt-12 text-lg">Andere Rezensionen:</p>
+			{#if reviews.length}
+				<p class="font-bold mt-12 text-lg">Andere Rezensionen:</p>
+			{/if}
 		{/if}
 
 		<ul class="flex flex-wrap gap-x-8 gap-y-2 not-prose">
@@ -94,7 +98,7 @@
 	{#if currentReview !== null}
 		<div class="flex justify-between">
 			<span class="font-bold">Von {currentReview.authorName ?? '<Anonym>'}</span>
-			<Rating stars={currentReview.overallStars} disabled={true} name="rating-in-modal"/>
+			<Rating stars={currentReview.overallStars} disabled={true} name="rating-in-modal" />
 		</div>
 
 		<!-- The Review (full) -->

@@ -41,7 +41,7 @@ export function infoMessage(message: string, duration = 5000) {
 	addMessage(message, 'info', duration);
 }
 
-export function errorMessage(message: string, duration?: number) {
+export function errorMessage(message: string, duration = 10000) {
 	addMessage(message, 'error', duration);
 }
 
