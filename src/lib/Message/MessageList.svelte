@@ -2,8 +2,6 @@
 	import { messageStore } from './MessageStore';
 	import Message from './Message.svelte';
 
-	export const prerender = false;
-
 	let messages = [];
 
 	messageStore.subscribe(data => {
