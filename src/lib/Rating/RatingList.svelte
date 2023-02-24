@@ -1,6 +1,7 @@
 <script>
 	import LabeledRating from './LabeledRating.svelte';
 
+	export let namePrefix = "";
 	export let ratings;
 	export let disabled = true;
 	export let size = undefined;
@@ -20,6 +21,6 @@
 			explanation={rating.explanation}
 			{disabled}
 			on:change={e => rating.stars = e.detail.stars}
-			name="rating-{rating.id}" />
+			name="{namePrefix.length ? (namePrefix + '-') : ''}rating-{rating.id}" />
 	{/each}
 </ul>

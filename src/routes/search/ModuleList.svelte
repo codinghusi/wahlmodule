@@ -71,7 +71,7 @@
 							<div class="divider mt-0"></div>
 
 							{#if (module.rated)}
-								<RatingList ratings={module.specificRatings} />
+								<RatingList namePrefix={module.short} ratings={module.specificRatings} />
 							{:else}
 								<p>Dieses Modul hat noch zu wenig Bewertungen</p>
 							{/if}
