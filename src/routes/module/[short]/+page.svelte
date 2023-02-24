@@ -87,7 +87,7 @@
 				<Rating stars={module.overallStars} disabled={true} class="self-center" size="lg" name="overall-rating" />
 			</h2>
 
-			<RatingList class="flex justify-center items-center" ratings={module.specificRatings} />
+			<RatingList class="flex justify-center items-center" ratings={module.specificRatings} namePrefix="rated" />
 		</article>
 	{/if}
 

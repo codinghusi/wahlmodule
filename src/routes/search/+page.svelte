@@ -6,7 +6,6 @@
 	import ModuleList from './ModuleList.svelte';
 	import FilterModal from './FilterModal.svelte';
 	import SubtleXIcon from '../../lib/icons/SubtleXIcon.svelte';
-	import { getModulesBySearch } from '../api/calls';
 
 	let filters = [];
 	export let data;
@@ -16,14 +15,17 @@
 	$: modules = data.modules;
 	$: availableFilters = data.availableFilters;
 
+
 	let filterModal;
 
-	let searchQuery = "";
+	let searchQuery = '';
+
+	let searchInput = '';
 
 	let modulesComponent;
 
-	function updateModules() {
-		modulesComponent.update();
+	function updateSearch() {
+		searchQuery = searchInput;
 	}
 
 	function remove(filter) {
@@ -36,13 +38,15 @@
 
 <section class="w-full max-w-lg">
 
-	<div class="flex gap-2">
+	<div class="flex gap-2 w-full">
 		<!-- Searchbar -->
-		<div class="form-control flex-1">
+		<div class="form-control flex-1 indicator w-full">
+			<span class="indicator-item badge badge-secondary"
+				  class:hidden={searchInput === searchQuery}></span>
 			<div class="input-group">
 				<input type="text" placeholder="Suche..." class="input input-bordered w-full"
-					   bind:value={searchQuery} on:keypress={e => e.key === 'Enter' && updateModules()}/>
-				<button class="btn btn-square" on:click={updateModules}>
+					   bind:value={searchInput} on:keypress={e => e.key === 'Enter' && updateSearch()} />
+				<button class="btn btn-square" on:click={updateSearch}>
 					<SearchIcon />
 				</button>
 			</div>

@@ -3,26 +3,45 @@
 	import ModalCloser from '../../lib/Modal/ModalCloser.svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	export let filters;
+	export let filters = [];
+	let filtersUnsaved = filters;
 	export let availableFilters;
 
-	let dispatch = createEventDispatcher();
+	$: updateFiltersUnsaved(filters);
+	$: updateAvailableFilters(availableFilters);
 
-	filters = availableFilters.flatMap(section => section.values).filter(value => !!value.default);
+	function updateFiltersUnsaved(filters) {
+		if (filters.length) {
+			filtersUnsaved = filters;
+		}
+	}
+
+	function updateAvailableFilters(availableFilters) {
+		filtersUnsaved = availableFilters.flatMap(section => section.values).filter(value => !!value.default);
+	}
+
+	let dispatch = createEventDispatcher();
 
 	function behaviour(section, filter) {
 		if (section.selection !== 'radio') {
 			return;
 		}
-		return () => {
-			filters = filters.filter(f => filter.type !== f.type || f.value === filter.value);
+		return (event) => {
+			const index = filtersUnsaved.findIndex(f => filter.type === f.type && f.value !== filter.value);
+			if (index === -1) {
+				event.preventDefault();
+				event.target.checked = true;
+			} else {
+				filtersUnsaved.splice(index, 1);
+				filtersUnsaved = filtersUnsaved; // trigger rerender
+			}
 		}
 	}
 
 	export function remove(filter) {
 		const section = availableFilters.find(section => section.type === filter.type);
 		if (section.selection === 'radio') {
-			filters = filters.map(f => {
+			filtersUnsaved = filtersUnsaved.map(f => {
 				if (f === filter) {
 					return section.values.find(f2 => f2.default);
 				} else {
@@ -30,8 +49,9 @@
 				}
 			})
 		} else {
-			filters = filters.filter(f => f !== filter);
+			filtersUnsaved = filtersUnsaved.filter(f => f !== filter);
 		}
+		filters = filtersUnsaved;
 	}
 </script>
 
@@ -52,7 +72,7 @@
 						<li class="form-control text-left">
 							<label class="label cursor-pointer">
 								<span class="label-text">{filter.label}</span>
-								<input type="checkbox" class="toggle" bind:group={filters} value={filter} on:change={behaviour(section, filter)} />
+								<input type="checkbox" class="toggle" bind:group={filtersUnsaved} value={filter} on:change={behaviour(section, filter)} />
 							</label>
 						</li>
 					{/each}
@@ -62,7 +82,7 @@
 	</ul>
 
 	<div slot="actions">
-		<button on:click={() => dispatch('submit', { filters })}>
+		<button on:click={() => {dispatch('submit', { filters: filtersUnsaved }); filters = filtersUnsaved;}}>
 			<ModalCloser class="btn" name="filter-modal">
 				Let's go
 			</ModalCloser>

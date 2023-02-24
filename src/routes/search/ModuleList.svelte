@@ -20,9 +20,17 @@
 	let pageSize = MAX_PAGE_SIZE_MODULES;
 	let showContent = false;
 
-	$: filters && update();
+	let mounted = false;
 
-	export async function update(pageIndex = page) {
+	$: updateOnChange(filters, searchQuery, page);
+
+	function updateOnChange() {
+		if (mounted) {
+			update();
+		}
+	}
+
+	export async function update(pageIndex = 0) {
 		loading = true;
 		const response = await getModulesBySearch(searchQuery, filters, pageIndex, pageSize).catch(() => ({ success: false }));
 		loading = false;
@@ -43,7 +51,7 @@
 		}
 	}
 
-	onMount(() => update());
+	onMount(() => mounted = true);
 </script>
 
 <Spinner {loading} {showContent}>

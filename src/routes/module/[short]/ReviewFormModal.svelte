@@ -105,7 +105,7 @@
 
 
 	<form class="form-controll w-full">
-		<RatingList bind:ratings disabled={false} />
+		<RatingList bind:ratings disabled={false} namePrefix="modal" />
 
 		<label class="label mt-2">
 			<span class="label-text">Bewertung* <em>(min. 10 Zeichen)</em></span>
