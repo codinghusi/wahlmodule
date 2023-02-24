@@ -72,20 +72,20 @@
 	{:else}
 
 		{#if ownedReview}
-			<p class="font-bold">Deine Rezension:</p>
+			<p class="font-bold text-lg">Deine Rezension:</p>
 			<Review review={ownedReview} modalName="create-review" />
-			<p class="font-bold">Andere Rezensionen:</p>
+			<p class="font-bold mt-12 text-lg">Andere Rezensionen:</p>
 		{/if}
-
-		<div class="flex justify-center items-center">
-			<Pagination bind:page {pageSize} {total} on:change={pageChange} />
-		</div>
 
 		<ul class="flex flex-wrap gap-x-8 gap-y-2 not-prose">
 			{#each reviews as review}
 				<Review {review} bind:currentReview />
 			{/each}
 		</ul>
+
+		<div class="flex justify-center items-center">
+			<Pagination bind:page {pageSize} {total} on:change={pageChange} />
+		</div>
 	{/if}
 </Spinner>
 

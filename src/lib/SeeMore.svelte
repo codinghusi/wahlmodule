@@ -1,4 +1,7 @@
 <script>
+	import DoubleArrowDownIcon from './icons/DoubleArrowDownIcon.svelte';
+	import DoubleArrowUpIcon from './icons/DoubleArrowUpIcon.svelte';
+
 	export let shown = false;
 	let smallEnough = false;
 	let child, container;
@@ -19,17 +22,17 @@
 
 </script>
 
-<div class="container" bind:this={container} class:max-h-48={!shown} class:h-full={shown}>
+<div class="container" bind:this={container}>
 
-	<div bind:this={child}>
+	<div bind:this={child} class:max-h-48={!shown} class:h-full={shown} class="overflow-hidden">
 		<slot />
 	</div>
 
-	<button class="button" class:backdrop-blur-md={!shown} class:hidden={smallEnough} on:click={toggle}>
+	<button class="button" class:hidden={smallEnough} on:click={toggle}>
 		{#if !shown}
-			Mehr anzeigen
+			<DoubleArrowDownIcon /> Mehr anzeigen <DoubleArrowDownIcon />
 		{:else}
-			Weniger anzeigen
+			<DoubleArrowUpIcon /> Weniger anzeigen <DoubleArrowUpIcon />
 		{/if}
 	</button>
 </div>
@@ -37,12 +40,14 @@
 
 <style>
     .container {
-        @apply relative overflow-hidden pb-12;
+        @apply relative pb-12;
     }
 
     .button {
-		@apply absolute btn btn-ghost bottom-0;
+		@apply flex gap-3;
+		@apply btn btn-ghost;
 		@apply w-full h-12;
+		bottom: -100%;
 	}
 
 </style>

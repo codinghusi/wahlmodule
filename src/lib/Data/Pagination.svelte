@@ -5,10 +5,19 @@
 	export let pageSize = 0;
 	export let page = 0;
 
-	const dispatch = createEventDispatcher();
-
 	let pageCount;
 	$: pageCount = Math.ceil(total / Math.max(pageSize, 1));
+
+	$: if (page < 0) {
+		page = 0;
+	}
+
+	$: if (page >= pageCount) {
+		page = pageCount - 1;
+	}
+
+
+	const dispatch = createEventDispatcher();
 
 	function back() {
 		page -= 1;

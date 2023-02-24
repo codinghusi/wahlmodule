@@ -20,6 +20,8 @@
 	let pageSize = MAX_PAGE_SIZE_MODULES;
 	let showContent = false;
 
+	$: filters && update();
+
 	export async function update(pageIndex = page) {
 		loading = true;
 		const response = await getModulesBySearch(searchQuery, filters, pageIndex, pageSize).catch(() => ({ success: false }));
@@ -59,7 +61,9 @@
 							{#if (module.rated)}
 								<Rating stars={module.overallStars} disabled={true} name="module-{module.short}" />
 							{:else}
-								<CrossedStar />
+								<span class="text-base">
+									Nicht bewertet
+								</span>
 							{/if}
 						</div>
 

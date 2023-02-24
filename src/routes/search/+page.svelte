@@ -22,14 +22,12 @@
 
 	let modulesComponent;
 
-
 	function updateModules() {
 		modulesComponent.update();
 	}
 
 	function remove(filter) {
 		filterModal.remove(filter);
-		updateModules();
 	}
 
 </script>
@@ -57,7 +55,7 @@
 
 	</div>
 
-	<!-- Filters enabled -->
+	<!-- Filter Badges -->
 	<ul class="flex gap-2 mt-2">
 		{#each filters as filter}
 			{#if !filter.default}
@@ -79,4 +77,4 @@
 
 </section>
 
-<FilterModal bind:this={filterModal} bind:filters {availableFilters} on:submit={updateModules} />
+<FilterModal bind:this={filterModal} bind:filters {availableFilters} />

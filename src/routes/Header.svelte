@@ -27,7 +27,7 @@
 			{/if}
 		</div>
 		<div class="navbar-center">
-			<a class="btn btn-ghost normal-case text-xl">
+			<a class="normal-case text-xl">
 				{title}
 			</a>
 		</div>

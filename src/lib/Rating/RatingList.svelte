@@ -10,7 +10,7 @@
 
 
 <!--<ul class={`${clazz} flex flex-wrap gap-x-8 gap-y-4 list-none`}>-->
-<ul class={`${clazz} grid grid-cols-2 gap-x-8 gap-y-4 list-none`}>
+<ul class="{clazz} grid grid-cols-2 gap-x-8 gap-y-4 list-none">
 	{#each ratings as rating, i (i)}
 		<LabeledRating
 			{size}

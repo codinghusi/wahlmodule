@@ -83,7 +83,7 @@
 	<!-- Ratings -->
 	{#if module.rated}
 		<article>
-			<h2 class="w-full flex justify-between">
+			<h2 class="w-full flex justify-between flex-wrap">
 				Bewertung
 				<Rating stars={module.overallStars} disabled={true} class="self-center" size="lg" name="overall-rating" />
 			</h2>
@@ -96,7 +96,7 @@
 	<article>
 		<h2 class="flex flex-wrap gap-4 justify-between">
 			Rezensionen
-			<ModalOpener class="btn btn-secondary" name="create-review">
+			<ModalOpener class="btn" name="create-review">
 				{#if review}
 					Bearbeiten
 				{:else}

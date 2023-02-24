@@ -7,13 +7,13 @@ module.exports = {
 	daisyui: {
 		themes: true,
 		lightTheme: 'bumblebee',
-		darkTheme: 'bumblebee'
-		// darkTheme: 'night'
+		darkTheme: 'dracula'
 	},
 	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 	safelist: [
 		'tooltip-left', 'tooltip-right',
 		'alert-info', 'alert-success', 'alert-error',
-		'rating-xs', 'rating-sm', 'rating-md', 'rating-lg'
+		'rating-xs', 'rating-sm', 'rating-md', 'rating-lg',
+		'btn-ghost'
 	]
 };
