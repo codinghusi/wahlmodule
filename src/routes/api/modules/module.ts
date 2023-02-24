@@ -8,13 +8,13 @@ export async function modulesWithRatings(modules: Module[]) {
 
 export async function moduleWithRating(module: Module) {
 	const stars = await prisma.$queryRaw`
-        SELECT rating.*, AVG(ratingofreview.stars) as stars
-        FROM module
-                 JOIN review ON module.short = review.moduleShort
-                 JOIN ratingofreview ON review.id = ratingofreview.reviewId
-                 JOIN rating ON ratingofreview.ratingId = rating.id
-        WHERE module.short = ${module.short}
-        GROUP BY rating.id` as { id: number, label: string, explanation: string, stars: number }[];
+        SELECT Rating.*, AVG(RatingOfReview.stars) as stars
+        FROM Module
+                 JOIN Review ON Module.short = Review.moduleShort
+                 JOIN RatingOfReview ON Review.id = RatingOfReview.reviewId
+                 JOIN Rating ON RatingOfReview.ratingId = Rating.id
+        WHERE Module.short = ${module.short}
+        GROUP BY Rating.id` as { id: number, label: string, explanation: string, stars: number }[];
 	if (stars.length) {
 		return {
 			...module,

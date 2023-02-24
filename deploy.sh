@@ -1,5 +1,5 @@
 git pull
 npm install
-npx prisma deploy
+npx prisma db push
 npm run update
 npm run build
