@@ -60,11 +60,11 @@
 	</div>
 
 	<!-- Filter Badges -->
-	<ul class="flex gap-2 mt-2">
+	<ul class="flex gap-2 mt-2 flex-wrap">
 		{#each filters as filter}
 			{#if !filter.default}
-				<li class="badge badge-secondary gap-2">
-					<button class="cursor-pointer flex items-center" on:click={() => remove(filter)}>
+				<li class="badge badge-secondary gap-2 flex">
+					<button class="cursor-pointer items-center" on:click={() => remove(filter)}>
 						<SubtleXIcon />
 					</button>
 
