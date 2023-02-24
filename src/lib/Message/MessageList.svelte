@@ -1,6 +1,7 @@
 <script>
 	import { messageStore } from './MessageStore';
 	import Message from './Message.svelte';
+	import { browser } from '$app/environment';
 
 	let messages = [];
 
@@ -9,8 +10,10 @@
 	});
 </script>
 
-<ul class="fixed top-1 right-1 flex flex-col gap-2">
-	{#each messages as message}
-		<Message {message} />
-	{/each}
-</ul>
+{#if browser}
+	<ul class="fixed top-1 right-1 flex flex-col gap-2">
+		{#each messages as message}
+			<Message {message} />
+		{/each}
+	</ul>
+{/if}
