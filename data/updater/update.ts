@@ -19,8 +19,7 @@ const ratingsFile = path.join(__dirname, '../other/ratings.json');
 const hashFile = path.join(__dirname, './lastCommit.txt');
 
 
-// exec("git pull", async (error, stdout) => {
-exec('echo \'schabernack\'', async (error, stdout) => {
+exec("git pull", async (error, stdout) => {
 	if (error) {
 		console.error(error);
 		return;
