@@ -36,11 +36,11 @@
 
 <Title title="Übersicht" />
 
-<section class="w-full max-w-lg">
+<section>
 
-	<div class="flex gap-2 w-full">
+	<div class="flex gap-2">
 		<!-- Searchbar -->
-		<div class="form-control flex-1 indicator w-full">
+		<div class="form-control flex-1 indicator">
 			<span class="indicator-item badge badge-secondary"
 				  class:hidden={searchInput === searchQuery}></span>
 			<div class="input-group">

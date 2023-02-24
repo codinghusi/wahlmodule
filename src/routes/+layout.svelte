@@ -10,7 +10,7 @@
 	<br />
 
 	<div class="mt-4 p-1 flex justify-center">
-		<main class="max-w-2xl">
+		<main class="max-w-xl w-full">
 			<slot />
 		</main>
 	</div>
