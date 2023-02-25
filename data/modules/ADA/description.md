@@ -1,0 +1,9 @@
+**Lernergebnisse:**  
+Die Studierenden lernen aktuelle Anwendungsgebiete für Data Analytics kennen und können einschätzen, welche Herausforderungen sich bei den jeweiligen Anwendungsszenarien ergeben (beispielsweise hinsichtlich Aufwand, Datenqualität). Sie lernen, welche Datengrundlage für eine bestimmte Zielsetzung nötig ist und erwerben die Kompetenz zur Durchführung einer Kosten-Nutzen-Analyse. Weiterhin erwerben die Studierenden die Fachkompetenz, Daten, die beim Technischen Monitoring entstehen, mittels geeigneter Werkzeuge zu analysieren und Optimierungspotentiale aufzudecken. Dafür lernen sie, Datensätze aus unterschiedlichen Quellen zusammenzuführen, zu bereinigen und zu visualisieren. Die Studierenden erhalten Einblick in die Grundlagen Maschineller Lernverfahren und sind in der Lage, ausgewählte Verfahren auf Beispieldaten anzuwenden, um beispielsweise Anomalien zu detektieren oder Trendfunktionen zur Vorhersage zu erstellen. Die Veranstaltung richtet sich insbesondere an Studierende der Studiengänge WI, MCD und ET.
+
+**Inhaltsbeschreibung:**  
+* Anwendungen von Data Analytics Methoden anhand aktueller industrieller Beispiele (z.B. Predictive Maintenance, Anomaliedetektion, Verbrauchsprognose)
+* Datenvorbereitung (u.a. Zusammenführung unterschiedlicher Datenquellen, Datenbereinigung, Beseitigung von Inkonsistenzen, Umgang mit fehlenden Merkmalswerten)
+* Grundbegriffe und Definitionen des Maschinellen Lernens (u.a. überwachtes/unüberwachtes/ bestärkendes Lernen), der Künstlichen Intelligenz und der Data Science
+* Ausgewählte Verfahren des Maschinellen Lernens (z.B. Clustering-Verfahren, Regressionsverfahren, Klassifikationsverfahren, Zeitreihenanalyse)
+* Data Analytics Werkzeuge (z.B. Google Colab, juypter Notebooks, KNIME)

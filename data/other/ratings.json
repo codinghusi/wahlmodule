@@ -31,16 +31,11 @@
   },
   {
     "id": 7,
-    "label": "Live/Aufzeichnungen",
-    "explanation": "Gab es Aufzeichnungen? Wenn ja, wie gut waren die Mitschnitte? (sonst leer lassen)"
-  },
-  {
-    "id": 8,
     "label": "Tutorium",
     "explanation": "Wie gut konnte dir das Tutorium helfen? (ggf. leer lassen)"
   },
   {
-    "id": 9,
+    "id": 8,
     "label": "Fehlerfreiheit",
     "explanation": "Gab es in den bereitgestellten Materialien wenig Fehler? Wurden genannte Fehler beseitigt?"
   }

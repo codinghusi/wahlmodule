@@ -1,4 +1,4 @@
-**Lernergebnisse:**
+**Lernergebnisse:**  
 Die Vorlesung „Big Data Analytics“ vermittelt den Studierenden die
 Grundlagen der Analyse von großen Datenbeständen. Die Studierenden
 verstehen die Prinzipien, Architekturen, Datenstrukturen und fundamentalen
@@ -6,7 +6,7 @@ Algorithmen der Datenanalyse großer Datenmengen. Mit dem vermittelten
 Wissen sind die Studierenden in der Lage, einfache Datenanalyseprojekte
 eigenständig durchzuführen und deren Ergebnisse zu evaluieren.
 
-**Inhaltsbeschreibung:**
+**Inhaltsbeschreibung:**  
 Ausgehend von der Architektur eines Einzelknotenrechners werden die
 Anforderungen an die Analyse großer, die Grenzen dieser Systeme
 sprengenden Datenbestände dargestellt. Hieraus wird die Architektur einer
@@ -17,7 +17,7 @@ Datenanalyse mittels statistischer Verfahren sowie das Vorgehen bei der
 Datenaufbereitung und –analyse. Hierzu werden die in Wissenschaft und
 Industrie verbreiteten Analyseumgebungen und –sprachen genutzt.
 
-**Eingangsvoraussetzungen:**
+**Eingangsvoraussetzungen:**  
 * Grundlegende Kenntnisse in Python bzw. einer höheren Programmiersprache
 * Grundlagen der Statistik
 * Datenstrukturen
