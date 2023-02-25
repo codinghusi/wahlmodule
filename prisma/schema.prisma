@@ -16,7 +16,7 @@ model Module {
     name        String
     description String @db.Text
     season      Season
-    fileName    String @unique
+    dirname    String @unique
 
     createdAt      DateTime        @default(now())
     updatedAt      DateTime        @updatedAt

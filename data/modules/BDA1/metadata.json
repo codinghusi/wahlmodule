@@ -1,0 +1,9 @@
+{
+  "short": "BDA1",
+  "name": "Big Data Analytics I",
+  "dependencies": [],
+  "focuses": [],
+  "degreePrograms": ["Inf", "WInf"],
+  "seasons": ["WS"],
+  "lecturers": ["elsen"]
+}

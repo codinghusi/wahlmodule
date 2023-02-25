@@ -1,12 +1,3 @@
----
-kurz = BDA1  
-name = Big Data Analytics I  
-voraussetzungen =  
-schwerpunkte =  
-studiengänge = Inf, WInf  
-semester = WS  
-dozent = elsen  
----
 **Lernergebnisse:**
 Die Vorlesung „Big Data Analytics“ vermittelt den Studierenden die
 Grundlagen der Analyse von großen Datenbeständen. Die Studierenden

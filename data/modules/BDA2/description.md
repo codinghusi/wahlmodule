@@ -1,12 +1,3 @@
----
-kurz = BDA2  
-name = Big Data Analytics II  
-voraussetzungen = BDA1  
-schwerpunkte =  
-studiengänge = Inf, WInf  
-semester = WS  
-dozenten = elsen  
----
 **Lernergebnisse:**
 Die Studierenden lernen Techniken und Anwendungen der Datenanalyse auf Basis des Hadoop-Ökosystems kennen und verstehen deren Funktion. Mit dem vermittelten Wissen sind die Studierenden in der Lage die für einen konkreten Anwendungsfall geeigneten Techniken auszuwählen und anzuwenden. Dabei kennen Sie die Vor- und Nachteile verschiedener Verfahren und Werkzeuge und können deren Anwendbarkeit bei einer konkreten Problemstellung gegeneinander abwägen und das am besten passende Verfahren einsetzen.
 
