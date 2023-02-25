@@ -6,31 +6,41 @@
 	import ModuleList from './ModuleList.svelte';
 	import FilterModal from './FilterModal.svelte';
 	import SubtleXIcon from '../../lib/icons/SubtleXIcon.svelte';
+	import { setQueryParam } from '../../lib/helper';
+	import { onMount } from 'svelte';
+	import { serializeFilters } from './filterSerialization';
 
-	let filters = [];
 	export let data;
 
-	let modules;
+	let filters;
+	let searchQuery;
+	let searchInput = '';
 	let availableFilters;
-	$: modules = data.modules;
-	$: availableFilters = data.availableFilters;
-
+	$: data && updateByData();
+	$: data && updateByData();
 
 	let filterModal;
-
-	let searchQuery = '';
-
-	let searchInput = '';
-
 	let modulesComponent;
 
-	function updateSearch() {
+	function updateSearchQuery() {
 		searchQuery = searchInput;
+	}
+
+	function updateByData() {
+		({ availableFilters, filters, searchQuery } = data);
+		searchInput = searchQuery;
 	}
 
 	function remove(filter) {
 		filterModal.remove(filter);
 	}
+
+	let mounted = false;
+
+	$: mounted && setQueryParam('filters', serializeFilters(filters));
+	$: mounted && setQueryParam('q', searchQuery);
+
+	onMount(() => mounted = true);
 
 </script>
 
@@ -45,8 +55,8 @@
 				  class:hidden={searchInput === searchQuery}></span>
 			<div class="input-group">
 				<input type="text" placeholder="Suche..." class="input input-bordered w-full"
-					   bind:value={searchInput} on:keypress={e => e.key === 'Enter' && updateSearch()} />
-				<button class="btn btn-square" on:click={updateSearch}>
+					   bind:value={searchInput} on:keypress={e => e.key === 'Enter' && updateSearchQuery()} />
+				<button class="btn btn-square" on:click={updateSearchQuery}>
 					<SearchIcon />
 				</button>
 			</div>

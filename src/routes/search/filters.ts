@@ -1,16 +1,28 @@
-import { json } from '@sveltejs/kit';
 import { FilterType } from './definitions';
 import { Season } from '@prisma/client';
 import type { Focus, DegreeProgram } from '@prisma/client';
 import { prisma } from '../../lib/Data/client';
 
+export interface Section {
+	type: FilterType
+	label: string
+	selection: "radio" | "checkbox"
+	values: Filter[]
+}
 
-function addType<T>(filters: T[], type: FilterType): (T & {type: FilterType})[] {
+export interface Filter {
+	type: FilterType
+	value: number|string
+	label: string
+	short: string
+	default?: boolean
+}
+
+function addType(filters: Omit<Filter, 'type'>[], type: FilterType): Filter[] {
 	return filters.map(filter => ({ ...filter, type }))
 }
 
-/** @type {import('./$types').RequestHandler} */
-export async function getFilters() {
+export async function getFilters(): Promise<Section[]> {
 	const seasons = [
 		{
 			value: Season.Both,

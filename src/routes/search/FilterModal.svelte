@@ -17,7 +17,9 @@
 	}
 
 	function updateAvailableFilters(availableFilters) {
-		filtersUnsaved = availableFilters.flatMap(section => section.values).filter(value => !!value.default);
+		filtersUnsaved = availableFilters
+			.flatMap(section => section.values)
+			.filter(value => !!value.default);
 	}
 
 	let dispatch = createEventDispatcher();
@@ -27,7 +29,7 @@
 			return;
 		}
 		return (event) => {
-			const index = filtersUnsaved.findIndex(f => filter.type === f.type && f.value !== filter.value);
+			const index = filtersUnsaved.findIndex(f => filter.type === f.type && f.value.toString() !== filter.value.toString());
 			if (index === -1) {
 				event.preventDefault();
 				event.target.checked = true;
@@ -49,7 +51,7 @@
 				}
 			})
 		} else {
-			filtersUnsaved = filtersUnsaved.filter(f => f !== filter);
+			filtersUnsaved = filtersUnsaved.filter(f => filter.type !== f.type || f.value.toString() !== filter.value.toString());
 		}
 		filters = filtersUnsaved;
 	}

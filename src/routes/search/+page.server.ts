@@ -1,13 +1,21 @@
-import { modulesWithRatings } from '../api/modules/module';
-import { prisma } from '../../lib/Data/client';
 import { getFilters } from './filters';
-import { MAX_PAGE_SIZE_MODULES } from '../../lib/Data/definitions';
+import { deserializeFilters } from './filterSerialization';
 
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }) {
+export async function load({ url, params }) {
 
+	const availableFilters = await getFilters();
+	
+	const filtersRaw = url.searchParams.get('filters') ?? '';
+	const filters = deserializeFilters(filtersRaw, availableFilters);
+	const searchQuery = url.searchParams.get('q') ?? '';
+	
+	console.log(filters);
+	
 	return {
-		availableFilters: await getFilters()
+		availableFilters,
+		filters,
+		searchQuery
 	};
 }
