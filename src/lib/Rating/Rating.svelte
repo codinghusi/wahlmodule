@@ -1,7 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import XIcon from '../icons/XIcon.svelte';
-	import { infoMessage } from '../Message/MessageStore';
 
 	export let stars = 0;
 	export let disabled = false;
@@ -52,8 +51,8 @@
 	<input type="radio" bind:group={stars} on:change={update} disabled={disabled} value={5} name={name}
 				 class={radioClasses} />
 
-	<label class={`cursor-pointer ml-2 ${stars > 0 && !disabled ? '' : 'hidden'}`} on:click={remove}>
+	<button class={`cursor-pointer ml-2 ${stars > 0 && !disabled ? '' : 'hidden'}`} on:click={remove} on:keypress={e => e.key === 'Enter' && remove()}>
 		<XIcon />
-	</label>
+	</button>
 
 </div>

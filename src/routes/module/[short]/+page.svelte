@@ -13,8 +13,12 @@
 	import { GITHUB_LINK } from '../../../lib/Data/definitions';
 
 	export let data;
-	let module, possibleRating, openReviewModal;
-	$: ({ module, possibleRating, openReviewModal } = data);
+	let module, possibleRating;
+	$: data && updateByData();
+
+	function updateByData() {
+		({ module, possibleRating } = data);
+	}
 
 	// load existing review
 	let review = null;
@@ -45,10 +49,6 @@
 
 
 	let reviewModal;
-	$: if (openReviewModal) {
-		reviewModal.open();
-	}
-
 	let reviews;
 
 	async function submit(e) {
@@ -71,7 +71,7 @@
 	<article>
 		<h2 class="h2 mt-0 flex justify-between">
 			Beschreibung
-			<a class="btn btn-ghost" target="_blank" href="{GITHUB_LINK}/edit/main/data/modules/{module.fileName ?? module.fileName}">
+			<a class="btn btn-ghost" target="_blank" rel="noreferrer" href="{GITHUB_LINK}/edit/main/data/modules/{module.fileName ?? module.fileName}">
 				<EditIcon />
 			</a>
 		</h2>

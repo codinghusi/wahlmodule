@@ -2,10 +2,9 @@
 	import BackIcon from '../lib/icons/BackIcon.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { navigating } from '$app/stores';
 	import { titleStore } from '../lib/Title/titleStore';
 
-	let showBackButton = false;
+	let showBackButton;
 	$: {
 		const path = $page.url.pathname as string;
 		showBackButton = path.startsWith('/module') || path.startsWith('/lecturer');
@@ -27,9 +26,9 @@
 			{/if}
 		</div>
 		<div class="navbar-center">
-			<a class="normal-case text-xl">
+			<span class="normal-case text-xl">
 				{title}
-			</a>
+			</span>
 		</div>
 
 		<div class="navbar-end"></div>

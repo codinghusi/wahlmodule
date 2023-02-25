@@ -10,7 +10,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import { createReview } from '../../api/calls';
 	import { errorMessage, successMessage } from '../../../lib/Message/MessageStore';
-	import { Review } from '@prisma/client';
 
 	export let name;
 	export let possibleRating;
@@ -59,6 +58,7 @@
 
 	let closer;
 	let dispatch = createEventDispatcher();
+
 	async function submit() {
 		loading = true;
 		const response = await createReview({
@@ -74,11 +74,11 @@
 		loading = false;
 
 		if (!response?.success) {
-			errorMessage("Es ist ein Fehler aufgetreten. Versuche es später noch einmal.");
+			errorMessage('Es ist ein Fehler aufgetreten. Versuche es später noch einmal.');
 			return;
 		}
 
-		successMessage("Bewertung erfolgreich abgesendet! Lade die Seite neu, um die Auswirkung auf die Sterne zu sehen.");
+		successMessage('Bewertung erfolgreich abgesendet! Lade die Seite neu, um die Auswirkung auf die Sterne zu sehen.');
 
 		dispatch('submit', { review: response.review });
 		closer.close();
@@ -95,24 +95,31 @@
 
 	<br />
 
-	<label>
-		<div class="label">
-			<span class="label-text">Wie heißt du? <em>(optional, min. 5 Zeichen)</em></span>
-		</div>
-		<input type="text" placeholder="<Anonym>" bind:value={authorName} minlength={AUTHOR_NAME_MIN_LENGTH}
-			   class="input input-bordered w-full max-w-xs" />
-	</label>
-
-
-	<form class="form-controll w-full">
-		<RatingList bind:ratings disabled={false} namePrefix="modal" />
-
-		<label class="label mt-2">
-			<span class="label-text">Bewertung* <em>(min. 10 Zeichen)</em></span>
+	<form>
+		<label>
+			<span class="label">
+				<span class="label-text">Wie heißt du? <em>(optional, min. 5 Zeichen)</em></span>
+			</span>
+			<input type="text" placeholder="<Anonym>" bind:value={authorName} minlength={AUTHOR_NAME_MIN_LENGTH}
+				   class="input input-bordered w-full max-w-xs" />
 		</label>
 
-		<textarea name="reason" class="textarea textarea-bordered w-full" minlength="10" bind:value={text}
-				  required></textarea>
+		<br />
+		<br />
+
+		<RatingList bind:ratings disabled={false} namePrefix="modal" />
+
+		<br />
+
+		<div class="form-controll w-full">
+			<label>
+				<span class="label">
+					<span class="label-text">Bewertung* <em>(min. 10 Zeichen)</em></span>
+				</span>
+				<textarea name="reason" class="textarea textarea-bordered w-full" minlength="10" bind:value={text}
+						  required></textarea>
+			</label>
+		</div>
 	</form>
 
 	<span slot="actions">

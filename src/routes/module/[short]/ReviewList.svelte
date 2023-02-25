@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ModalOpener from '../../../lib/Modal/ModalOpener.svelte';
 	import Rating from '../../../lib/Rating/Rating.svelte';
 	import Modal from '../../../lib/Modal/Modal.svelte';
 	import FlagIcon from '../../../lib/icons/FlagIcon.svelte';
@@ -112,7 +111,7 @@
 	{/if}
 
 	<span slot="actions" class="flex-1">
-		<a class="btn btn-ghost text-error" target="_blank" href={reportHref}>
+		<a class="btn btn-ghost text-error" rel="noreferrer" target="_blank" href={reportHref}>
 			<FlagIcon />
 		</a>
 	</span>

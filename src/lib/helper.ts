@@ -10,5 +10,5 @@ export function setQueryParam(key: string, value: string) {
 	else {
 		url.searchParams.delete(encodeURIComponent(key));
 	}
-	history.replaceState({}, '', url);
+	history.replaceState(history.state, '', url);
 }
