@@ -1,24 +1,20 @@
-**Lernergebnisse:**  
-Die Vorlesung „Big Data Analytics“ vermittelt den Studierenden die
-Grundlagen der Analyse von großen Datenbeständen. Die Studierenden
-verstehen die Prinzipien, Architekturen, Datenstrukturen und fundamentalen
-Algorithmen der Datenanalyse großer Datenmengen. Mit dem vermittelten
-Wissen sind die Studierenden in der Lage, einfache Datenanalyseprojekte
-eigenständig durchzuführen und deren Ergebnisse zu evaluieren.
+*Die folgende Beschreibung wurde durch [ChatGPT](https://chat.openai.com/) generiert, da es keine Zustimmung zur Nutzung der Beschreibung aus Campus Office gibt. Daher kann es in der Beschreibung auch zu Falschaussagen kommen.*
 
-**Inhaltsbeschreibung:**  
-Ausgehend von der Architektur eines Einzelknotenrechners werden die
-Anforderungen an die Analyse großer, die Grenzen dieser Systeme
-sprengenden Datenbestände dargestellt. Hieraus wird die Architektur einer
-verteilten Datenverarbeitung hergeleitet. Ein Schwerpunkt liegt auf der
-verteilten Ausführung von Algorithmen basierend auf dem Hadoop
-Framework. Die Vorlesung beleuchtet weiterhin Kernalgorithmen der
-Datenanalyse mittels statistischer Verfahren sowie das Vorgehen bei der
-Datenaufbereitung und –analyse. Hierzu werden die in Wissenschaft und
-Industrie verbreiteten Analyseumgebungen und –sprachen genutzt.
+**Allgemein**  
+Das Modul "Big Data Analytics" ist ein Wahlpflichtmodul des Bachelorstudiengangs Informatik und vermittelt den Studierenden fortgeschrittene Fähigkeiten im Bereich der Datenanalyse. Die Studierenden lernen, wie sie große Datenmengen analysieren und auswerten können, um wertvolle Erkenntnisse für Unternehmen und Organisationen zu gewinnen.
 
-**Eingangsvoraussetzungen:**  
-* Grundlegende Kenntnisse in Python bzw. einer höheren Programmiersprache
-* Grundlagen der Statistik
-* Datenstrukturen
-* Grundlagen der Rechnerarchitektur
+**Motivation**  
+Mit der wachsenden Bedeutung von Big Data in der heutigen Welt steigt auch die Nachfrage nach Fachkräften, die in der Lage sind, große Datenmengen zu analysieren und auszuwerten. Unternehmen und Organisationen sammeln und speichern immer mehr Daten, die ohne eine effektive Analyse ungenutzt bleiben. Absolventen dieses Moduls können in einer Vielzahl von Branchen und Berufsfeldern tätig sein, die sich auf die Verarbeitung großer Datenmengen spezialisiert haben.
+
+**Lernziele**  
+Die Studierenden sollen nach Abschluss des Moduls in der Lage sein, folgende Fähigkeiten und Kenntnisse zu demonstrieren:
+
+Verständnis der Konzepte und Prinzipien von Big Data Analytics
+Vertrautheit mit den gängigen Technologien und Tools für die Verarbeitung von Big Data
+Fähigkeit zur effektiven Analyse und Auswertung von großen Datenmengen
+Kenntnisse in der Anwendung von Algorithmen und Methoden für die Big-Data-Analyse
+Fähigkeit zur Interpretation von Ergebnissen und Ableitung von Handlungsempfehlungen
+Fähigkeit zur effektiven Präsentation von Analyseergebnissen und -empfehlungen  
+
+**Berufliche Perspektiven**  
+Absolventinnen und Absolventen des Moduls "Big Data Analytics" können Karrieren in verschiedenen Branchen und Berufsfeldern verfolgen, einschließlich Business Intelligence, Data Science, Finanzen, Marketing und öffentliche Verwaltung. Mögliche Karrierewege sind Datenanalysten, Big-Data-Entwickler, Datenarchitekten, Data Scientists und Business Analysten. Die Fähigkeiten und Kenntnisse, die in diesem Modul vermittelt werden, sind in der heutigen Arbeitswelt sehr gefragt und bieten den Absolventen hervorragende Berufsaussichten.

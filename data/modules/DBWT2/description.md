@@ -1,35 +1,21 @@
-**Lernergebnisse:**  
-Studierende sollen …
-* eine Webanwendung selbstständig entwickeln und das Web-Application-Framework Laravel sicher anwenden …
-* mit JavaScript clientseitige Dynamiken implementieren …
-* mit modernen Werkzeugen, wie NPM (Node.js)eine Paketverwaltung umsetzen …
-* eineSingle-Page-Application mit Vue umsetzen…
-* eine Echtzeitkommunikation mit WebSockets erstellen …
-* neben relationalenDatenbanken(PostgreSQL)auchKey-Value-Stores (Redis) beschreiben und einsetzen …
+*Die folgende Beschreibung wurde durch [ChatGPT](https://chat.openai.com/) generiert, da es keine Zustimmung zur Nutzung der Beschreibung aus Campus Office gibt. Daher kann es in der Beschreibung auch zu Falschaussagen kommen.*
 
-können, damit sie selbstständig neue cloudfähige und skalierbare (Single-Page)-Applications konzipieren und entwickeln können.
+**Allgemein**
+Das Modul "Datenbanken und Webtechnologien 2" ist ein fortgeschrittenes Wahlpflichtmodul des Bachelorstudiengangs Informatik und baut auf dem Modul "Datenbanken und Webtechnologien 1" aus dem Kernstudium auf. In diesem Modul werden die Fähigkeiten und Kenntnisse der Studierenden in der Webentwicklung vertieft, insbesondere im Hinblick auf die Nutzung von JavaScript-Frameworks. VueJs wird in Kombination mit Laravel genutzt, um komplexe Webanwendungen zu entwickeln.
 
-Die Studierenden erlernen den praktischen Einsatz moderner Technologien in der Entwicklung von cloudy-ready Webanwendungen. Die Studierenden kennen Architekturen von Single-Page-Anwendungenund sind in der Lage selbstständig einfache dynamische Webanwendungen (Frontend sowie Backend) zu entwickeln.
+**Motivation**
+Webanwendungen sind in vielen Branchen und Berufsfeldern unverzichtbar geworden und stellen eine wichtige Komponente der Softwareentwicklung dar. Mit diesem Modul können die Studierenden ihre Fähigkeiten und Kenntnisse in der Entwicklung von Webanwendungen vertiefen und sich auf die Nutzung von JavaScript-Frameworks spezialisieren. Insbesondere werden die Studierenden in die Lage versetzt, komplexe Webanwendungen mit VueJs und Laravel zu entwickeln.
 
-Dabei werden bestehende Kenntnisse im Einsatz von Datenbanken, Web-Application-Frameworks sowie Objekt-Relationalen-Mappings aufgegriffen und weiter vertieft.
+**Lernziele**
+Die Studierenden sollen nach Abschluss des Moduls in der Lage sein, folgende Fähigkeiten und Kenntnisse zu demonstrieren:
 
-**Inhaltsbeschreibung:**  
-Die Vorlesung zeigt die Grundlagen für die Entwicklung moderner Webanwendungen und beleuchtet insbesondere die folgenden Aspekte:
-* Single Page Applications (Architekturen)
-* Frontendtechnologien (JavaScript, Vue, ...)
-* Asynchrone Abfrageverarbeitung (AJAX, axios)
-* Styling von Webanwendungen (SASS, BEM)
-* Echtzeitkommunikation (Websockets)
-* Web Application Framework (Laravel)
-* Key-Values-Stores (Redis)
+* Verständnis der Konzepte und Prinzipien von VueJs und Laravel
+* Fähigkeit zur Nutzung von VueJs und Laravel zur Entwicklung von komplexen Webanwendungen
+* Kenntnisse in der Nutzung von VueJs-Komponenten, -Direktiven und -Filters
+* Kenntnisse in der Nutzung von Laravel-Blade-Templates und Eloquent ORM
+* Fähigkeit zur Integration von VueJs- und Laravel-Komponenten und -Funktionen
+* Fähigkeit zur effektiven Nutzung von JavaScript-Tools und -Frameworks zur Entwicklung von Webanwendungen
+* Fähigkeit zur Erstellung von RESTful-APIs mit Laravel.
 
-Dazu gehören Programmiersprachen und Techniken zur Umsetzung und Gestaltung dynamischer Benutzeroberflächen sowie Sprachen für die Datenabfrage und -manipulation. Die Persistierung von Daten geschieht in unterschiedlich strukturierten Datenbanken, wie dem relationalen Modell und Key-Value Stores.
-
-Im begleitenden Praktikum erlernen die Studierenden die Implementierung einer Webanwendung anhand eines praxisnahen Projekts.
-
-**Eingangsvoraussetzungen:**  
-Empfohlene Kenntnisse, Fähigkeiten und Fertigkeiten für eine erfolgreiche Teilnahme und Hinweise für die geeignete Vorbereitung durch die Studierenden
-
-* Grundlagen in Webentwicklung.
-* Grundlagen der Programmiersprache PHP mit Kenntnissen des Web-Frameworks Laravel.
-* Grundlagen in Datenbanken, SQL.
+**Berufliche Perspektiven**
+Absolventinnen und Absolventen des Moduls "Datenbanken und Webtechnologien 2" können Karrieren in verschiedenen Branchen und Berufsfeldern verfolgen, einschließlich Webentwicklung, Softwareentwicklung, E-Commerce und IT-Beratung. Mögliche Karrierewege sind Webentwickler, Full-Stack-Entwickler, JavaScript-Entwickler und Softwarearchitekten. Die Fähigkeiten und Kenntnisse, die in diesem Modul vermittelt werden, sind in der heutigen Arbeitswelt sehr gefragt und bieten den Absolventen hervorragende Berufsaussichten. Durch die Spezialisierung auf VueJs und Laravel können Absolventinnen und Absolventen dieses Moduls einen Vorteil bei der Suche nach einer Karriere in der Webentwicklung haben.
