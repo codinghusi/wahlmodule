@@ -4,7 +4,7 @@
 	import {
 		AUTHOR_NAME_MIN_LENGTH,
 		MIN_RATING_COUNT,
-		REVIEW_TEXT_MIN_LENGTH
+		REVIEW_TEXT_MIN_LENGTH, ROOT
 	} from '../../../lib/Data/definitions';
 	import RatingList from '../../../lib/Rating/RatingList.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -22,6 +22,7 @@
 	let editToken = undefined;
 	let id = undefined;
 	let ratings = possibleRating.map(r => ({ stars: 0, ...r }));
+	let privacy = false;
 
 	$: wipReview = {
 		editToken,
@@ -45,6 +46,7 @@
 		}));
 		editToken = review.editToken;
 		id = review.id;
+		privacy = true;
 	}
 
 
@@ -53,7 +55,8 @@
 	$: {
 		submitEnabled = text?.length >= REVIEW_TEXT_MIN_LENGTH
 			&& ratings.filter(rating => rating.stars > 0).length >= MIN_RATING_COUNT
-			&& (!authorName || authorName?.length === 0 || authorName?.length >= AUTHOR_NAME_MIN_LENGTH);
+			&& (!authorName || authorName?.length === 0 || authorName?.length >= AUTHOR_NAME_MIN_LENGTH)
+			&& privacy;
 	}
 
 	let closer;
@@ -118,6 +121,13 @@
 				</span>
 				<textarea name="reason" class="textarea textarea-bordered w-full" minlength="10" bind:value={text}
 						  required></textarea>
+			</label>
+		</div>
+
+		<div class="form-control w-full">
+			<label class="label cursor-pointer">
+				<span class="label-text">Ich habe die <a class="button btn-link" target="_blank" rel="noreferrer" href="{ROOT}/privacy">Datenschutzerklärung</a> gelesen*</span>
+				<input type="checkbox" class="toggle" bind:checked={privacy} />
 			</label>
 		</div>
 	</form>

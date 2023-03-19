@@ -1,12 +1,11 @@
 <script>
-	import CrossedStar from '../../lib/icons/CrossedStar.svelte';
 	import Rating from '../../lib/Rating/Rating.svelte';
 	import RatingList from '../../lib/Rating/RatingList.svelte';
 	import { getModulesBySearch } from '../api/calls';
 	import { errorMessage } from '../../lib/Message/MessageStore';
 	import Spinner from '../../lib/Data/Spinner.svelte';
 	import Pagination from '../../lib/Data/Pagination.svelte';
-	import { MAX_PAGE_SIZE_MODULES } from '../../lib/Data/definitions';
+	import { MAX_PAGE_SIZE_MODULES, ROOT } from '../../lib/Data/definitions';
 	import { onMount } from 'svelte';
 
 	export let searchQuery;
@@ -85,7 +84,7 @@
 							{/if}
 							<br />
 							<div class="card-actions justify-end">
-								<a class="btn btn-primary" href="/module/{module.short.toLowerCase()}">Ansehen</a>
+								<a class="btn btn-primary" href="{ROOT}/module/{module.short.toLowerCase()}">Ansehen</a>
 							</div>
 						</div>
 
