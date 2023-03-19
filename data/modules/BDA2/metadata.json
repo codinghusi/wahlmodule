@@ -3,7 +3,7 @@
   "name": "Big Data Analytics II",
   "dependencies": ["BDA1"],
   "focuses": [],
-  "degreePrograms": ["Inf", "WInf"],
+  "degreePrograms": ["Inf", "WInf", "MCD"],
   "seasons": ["WS"],
   "lecturers": ["elsen"]
 }
