@@ -64,7 +64,7 @@
 	}
 </script>
 
-<Title title={`Modul: ${module.name}`} />
+<Title title={`${module.name}`} />
 
 <section class="flex flex-col gap-12">
 	<!-- Description -->

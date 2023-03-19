@@ -26,7 +26,7 @@
 			{/if}
 		</div>
 		<div class="navbar-center">
-			<span class="normal-case text-xl">
+			<span class="normal-case text-xl w-48 md:w-full">
 				{title}
 			</span>
 		</div>
