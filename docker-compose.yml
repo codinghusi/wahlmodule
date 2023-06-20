@@ -1,0 +1,44 @@
+# Based on https://www.bezkoder.com/docker-compose-nodejs-mysql/
+
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0.33
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - "$MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT"
+    volumes:
+      - db:/var/lib/mysql
+
+  reverse_proxy:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - <path/to/your/config>:/etc/nginx
+      - <path/to/your/certs>:/etc/ssl/private
+  app:
+    depends_on:
+      - mysqldb
+    build: ./
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    environment:
+      - DB_HOST=mysqldb
+      - DB_USER=$MYSQLDB_USER
+      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - DB_NAME=$MYSQLDB_DATABASE
+      - DB_PORT=$MYSQLDB_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
