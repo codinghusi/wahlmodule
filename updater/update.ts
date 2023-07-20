@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import { getDiffSummary, updateByFile, updateHash, updateModules } from './lib';
 
 // FIXME: It's a must that you have the very first commit without any data/* which hash needs to be put into lastCommit.txt
-// FIXME: changes of last commit will always apply (if hash == HEAD, it's like hash == HEAD-1)
 
 
 const prisma = new PrismaClient();

@@ -5,7 +5,7 @@ import { prisma } from '../src/lib/Data/client';
 import 'dotenv/config';
 
 // TODO: test edge cases for: deletion, renaming files and directories (gitlabConfig.new_path vs gitlabConfig.old_path?)
-// FIXME: modules/others/... is not a valid directory for a module
+// FIXME: modules/other/... is not a valid directory for a module
 
 import { fileURLToPath } from 'url';
 
@@ -71,6 +71,12 @@ export async function getDiffSummary(): Promise<DiffSummary> {
 		}))
 	};
 	if (!result.latestCommit) {
+		if (json.commit === null) {
+			return {
+				latestCommit: config.currentCommit,
+				diffs: []
+			};
+		}
 		console.error(json);
 		throw "couldn't get diff summary";
 	}
@@ -88,15 +94,7 @@ export async function downloadFile(fileName: string) {
 		throw `Couldn't download file ${fileName}`;
 	}
 	
-	return Buffer.from(json.content, 'base64').toString('ascii');
-}
-
-export async function getRootCommitHash() {
-	const config = getGitlabConfig();
-	return fetch(`${config.url}/api/v4/projects/${config.projectId}/repository/commits?order=topo`, {
-		headers: { 'PRIVATE-TOKEN': config.accessToken }
-	})
-		.then(response => response.json());
+	return Buffer.from(json.content, 'base64').toString('utf-8');
 }
 
 export async function updateByFile<T>(diffSummary: DiffSummary, fileName: string, idKey: keyof T, model: keyof typeof prisma, deleteAll = false) {
@@ -130,7 +128,7 @@ export async function updateModules(diffSummary: DiffSummary) {
 	const deletes = [];
 	for (const file of diffSummary.diffs) {
 		const dirname = path.dirname(file.new_path);
-		if (dirname === 'other') {
+		if (dirname.endsWith('other')) {
 			continue;
 		}
 		
