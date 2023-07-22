@@ -37,18 +37,21 @@ Es werden die folgenden Werte unterstützt (als Liste, sodass beide Semester mö
 `lecturers`  
 Die Dozenten des Moduls. Als Liste der Kürzel der Dozenten. Diese müssen in der [lecturers.json](https://github.com/codinghusi/wahlmodule/blob/main/data/other/lecturers.json) definiert sein.
 
+
+# Hosting
+## Daten-Repository
+Die Modulbeschreibungen und Ähnliches werden in einem Daten-Repository gehostet. Als Vorlage dient dafür ...  
+Es muss ein GitLab-Repository sein. Dies muss in der .env Datei hinterlegt werden.
+
+## Konfiguration
+Erstellen der .env Datei. Als Vorlage dient dafür die env-template.txt
+
 ## Daten auf dem Server aktualisieren
 ```bash
-git pull
 npm run update
 ```
 
-# Einrichtung des Servers
-Datei .env hinzufügen:
-```env
-DATABASE_URL=mysql://username:password@hostname:port/mydb
-```
-
+## Installieren
 ```bash
 npm install
 npx prisma db push
