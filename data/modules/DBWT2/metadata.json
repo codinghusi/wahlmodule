@@ -1,9 +1,0 @@
-{
-  "short": "DBWT2",
-  "name": "Datenbanken und Webtechnologien 2",
-  "dependencies": [],
-  "focuses": [],
-  "degreePrograms": ["Inf", "WInf", "MCD"],
-  "seasons": ["SS"],
-  "lecturers": ["hannig"]
-}

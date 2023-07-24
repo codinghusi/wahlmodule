@@ -1,0 +1,82 @@
+[
+  {
+    "id": 2,
+    "title": "Vorlesungen",
+    "ratings": [
+      {
+        "id": 1,
+        "label": "Wie strukturiert ist die Vorlesung?",
+        "type": "stars",
+        "params": {
+          "bad": "unstrukturiert",
+          "good": "strukturiert"
+        }
+      },
+      {
+        "id": 2,
+        "label": "Gibt es Fehler auf den Vorlesungsfolien?",
+        "type": "stars",
+        "params": {
+          "bad": "viele",
+          "good": "wenige"
+        }
+      },
+      {
+        "id": 3,
+        "label": "Gibt es Übungen während der Vorlesung?",
+        "type": "yes_no"
+      },
+      {
+        "id": 4,
+        "label": "Gibt es ausreichend Pausen während der Vorlesung?",
+        "type": "yes_no"
+      }
+    ]
+  },
+
+  {
+    "id": 3,
+    "title": "Übungen",
+    "ratings": [
+      {
+        "id": 1,
+        "label": "Unterstützen die Übungen jede einzelne Vorlesung?",
+        "type": "stars",
+        "params": {
+          "bad": "wenig",
+          "good": "gut"
+        }
+      },
+      {
+        "id": 2,
+        "label": "Gibt es genug Übungsmaterialien?",
+        "type": "stars",
+        "params": {
+          "bad": "kaum",
+          "good": "ausreichend"
+        }
+      },
+      {
+        "id": 3,
+        "label": "Haben die Übungsmaterialien Fehler?",
+        "type": "stars",
+        "params": {
+          "bad": "viele",
+          "good": "wenige"
+        }
+      }
+    ]
+  },
+
+  {
+    "id": 4,
+    "title": "Klausur",
+    "ratings": [
+      {
+        "id": 1,
+        "label": "Gibt es Altklausuren?",
+        "type": "yes_no"
+      }
+    ]
+  }
+]

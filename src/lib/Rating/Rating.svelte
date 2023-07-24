@@ -51,7 +51,7 @@
 	<input type="radio" bind:group={stars} on:change={update} disabled={disabled} value={5} name={name}
 				 class={radioClasses} />
 
-	<button class={`cursor-pointer ml-2 ${stars > 0 && !disabled ? '' : 'hidden'}`} on:click={remove} on:keypress={e => e.key === 'Enter' && remove()}>
+	<button class={`cursor-pointer ml-2 ${stars > 0 && !disabled ? '' : 'hidden'}`} on:click={remove}>
 		<XIcon />
 	</button>
 

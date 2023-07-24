@@ -1,9 +1,0 @@
-{
-  "short": "KP",
-  "name": "Kryptologie",
-  "dependencies": [],
-  "focuses": ["IT-Sicherheit"],
-  "degreePrograms": ["Inf", "WInf"],
-  "seasons": ["WS"],
-  "lecturers": ["hoever"]
-}
