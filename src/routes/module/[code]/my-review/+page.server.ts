@@ -1,14 +1,11 @@
-import { moduleWithRating } from '../../api/modules/module';
-import { reviewWithOverallStars } from '../../api/reviews/review';
-import { prisma } from '../../../lib/Data/client';
+import { prisma } from '../../../../lib/Data/client';
 
-/** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-	const possibleRating = await prisma.rating.findMany();
+	const possibleRating = await prisma.reviewQuestion.findMany();
 	
 	let module = await prisma.module.findUniqueOrThrow({
 		where: {
-			short: params.short
+			code: params.code
 		},
 		include: {
 			reviews: true,
@@ -22,6 +19,4 @@ export async function load({ params }) {
 	module.reviews = await Promise.all(module.reviews.map(review => reviewWithOverallStars(review)));
 
 	return { module, possibleRating };
-	
-	// throw error(404, 'Not found');
 }

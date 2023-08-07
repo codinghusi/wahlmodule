@@ -2,100 +2,152 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
-    previewFeatures = ["filteredRelationCount", "fullTextSearch", "fullTextIndex"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model Module {
-    short       String @id
-    name        String
-    description String @db.Text
-    season      Season
-    dirname     String @unique
+  code        Int    @id @default(0)
+  short       String @unique
+  name        String
+  description String @db.Text
+  season      Season
+  dirname     String @unique
 
-    createdAt      DateTime        @default(now())
-    updatedAt      DateTime        @updatedAt
-    degreePrograms DegreeProgram[]
-    focuses        Focus[]
-    lecturers      Lecturer[]
-    reviews        Review[]
-    dependencies   Module[]        @relation("ModuleDepends")
-    dependencyTo   Module[]        @relation("ModuleDepends")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  degreePrograms DegreeProgram[]
+  focuses        Focus[]
+  lecturers      Lecturer[]
+  reviews        Review[]
+  dependencies   Module[]        @relation("ModuleDepends")
+  dependencyTo   Module[]        @relation("ModuleDepends")
 
-    @@fulltext([name])
-    @@fulltext([description])
+  @@fulltext([name])
+  @@fulltext([description])
 }
 
 // Semesterzeit
 enum Season {
-    Winter
-    Summer
-    Both
-    None
+  Winter
+  Summer
+  Both
+  None
 }
 
 // Studiengang
 model DegreeProgram {
-    short   String   @id
-    long    String   @unique
-    modules Module[]
+  id      Int      @id @default(0)
+  short   String   @unique
+  long    String   @unique
+  modules Module[]
 }
 
 // Schwerpunkt
 model Focus {
-    id      Int      @id
-    name    String   @unique
-    modules Module[]
+  id      Int      @id @default(0)
+  name    String   @unique
+  modules Module[]
 }
 
 // Dozent
 model Lecturer {
-    short    String   @id
-    fullName String   @unique
-    homepage String
-    modules  Module[]
+  id       Int      @id @default(0)
+  short    String   @unique
+  fullName String   @unique
+  homepage String
+  modules  Module[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-model Rating {
-    id          Int                 @id @default(autoincrement())
-    label       String
-    explanation String
-    reviews     RatingOfReview[]
-
-    createdAt      DateTime         @default(now())
-    updatedAt      DateTime         @updatedAt
-}
-
-model RatingOfReview {
-    rating   Rating @relation(fields: [ratingId], references: [id])
-    review   Review @relation(fields: [reviewId], references: [id])
-    stars    Int
-    ratingId Int
-    reviewId Int
-
-    @@id([ratingId, reviewId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Rezension
 model Review {
-    id          Int    @id @default(autoincrement())
-    editToken   String @unique @default(uuid())
+  id        Int    @id @default(autoincrement())
+  editToken String @unique @default(uuid())
 
-    module      Module @relation(fields: [moduleShort], references: [short])
-    moduleShort String
+  module      Module @relation(fields: [moduleShort], references: [short])
+  moduleShort String
 
-    authorName  String?
-    text        String
-    ratings     RatingOfReview[]
+  authorName   String?
+  text         String
+  starsAnswers ReviewAnswerStars[]
+  yesNoAnswers ReviewAnswerYesNo[]
+  textAnswers  ReviewAnswerText[]
 
-    createdAt   DateTime         @default(now())
-    updatedAt   DateTime         @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ReviewTopic {
+  id        Int              @id
+  title     String
+  questions ReviewQuestion[]
+}
+
+model ReviewQuestion {
+  id                Int
+  label             String
+  type              ReviewQuestionType
+  topic             ReviewTopic         @relation(fields: [topicId], references: [id])
+  topicId           Int
+  params            Json
+  ReviewAnswerStars ReviewAnswerStars[]
+  ReviewAnswerYesNo ReviewAnswerYesNo[]
+  ReviewAnswerText  ReviewAnswerText[]
+
+  @@id([id, topicId])
+}
+
+model ReviewAnswerStars {
+  review     Review         @relation(fields: [reviewId], references: [id])
+  reviewId   Int
+  question   ReviewQuestion @relation(fields: [topicId, questionId], references: [topicId, id])
+  topicId    Int
+  questionId Int
+
+  stars Int
+
+  @@id([reviewId, questionId])
+}
+
+model ReviewAnswerYesNo {
+  review     Review         @relation(fields: [reviewId], references: [id])
+  reviewId   Int
+  question   ReviewQuestion @relation(fields: [topicId, questionId], references: [topicId, id])
+  topicId    Int
+  questionId Int
+
+  answer YesNo
+
+  @@id([reviewId, questionId])
+}
+
+model ReviewAnswerText {
+  review     Review         @relation(fields: [reviewId], references: [id])
+  reviewId   Int
+  question   ReviewQuestion @relation(fields: [topicId, questionId], references: [topicId, id])
+  topicId    Int
+  questionId Int
+
+  answer String
+
+  @@id([reviewId, questionId])
+}
+
+enum YesNo {
+  yes
+  no
+}
+
+enum ReviewQuestionType {
+  stars
+  yes_no
+  text
 }
