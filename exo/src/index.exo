@@ -1,0 +1,14 @@
+@postgres
+module ModuleDatabase {
+  @access(
+  type Module {
+    @pk code: Int
+    @unique short: String
+    @unique dirname: String
+    name: String
+    description: String
+    season: Season
+  }
+
+  type
+}
