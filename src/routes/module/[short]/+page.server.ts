@@ -1,7 +1,7 @@
 import { moduleWithRating } from '../../api/modules/module';
 import { reviewWithOverallStars } from '../../api/reviews/review';
 import { prisma } from '../../../lib/Data/client';
-import { getGitLabLink } from '../../../gitlab';
+import { getGitLabLink } from '$lib/gitlab';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
