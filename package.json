@@ -9,8 +9,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"update": "node --experimental-specifier-resolution=node --loader ts-node/esm updater/update.ts",
-		"test": "node --experimental-specifier-resolution=node --loader ts-node/esm updater/test.ts"
+		"update": "node --import tsx updater/update.ts",
+		"test": "node --import tsx updater/test.ts"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",
@@ -42,6 +42,7 @@
 		"@tailwindcss/typography": "^0.5.9",
 		"daisyui": "^2.50.0",
 		"dotenv": "^16.3.1",
-		"svelte-markdown": "^0.2.3"
+		"svelte-markdown": "^0.2.3",
+		"tsx": "^4.7.0"
 	}
 }
