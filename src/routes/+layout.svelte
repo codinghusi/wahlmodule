@@ -1,3 +1,12 @@
+<script>
+	import Header from './Header.svelte';
+	import './styles.css';
+	import MessageList from '../lib/Message/MessageList.svelte';
+	import Spinner from '../lib/Data/Spinner.svelte';
+	import { navigating } from '$app/stores';
+	import { GITHUB_LINK, ROOT } from '../lib/Data/definitions';
+</script>
+
 <div class="flex flex-col h-full">
 	<Header />
 
@@ -27,11 +36,4 @@
 
 </div>
 
-<script>
-	import Header from './Header.svelte';
-	import './styles.css';
-	import MessageList from '../lib/Message/MessageList.svelte';
-	import Spinner from '../lib/Data/Spinner.svelte';
-	import { navigating } from '$app/stores';
-	import { GITHUB_LINK, ROOT } from '../lib/Data/definitions';
-</script>
+

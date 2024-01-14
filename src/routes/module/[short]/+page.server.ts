@@ -1,6 +1,7 @@
 import { moduleWithRating } from '../../api/modules/module';
 import { reviewWithOverallStars } from '../../api/reviews/review';
 import { prisma } from '../../../lib/Data/client';
+import { getGitLabLink } from '../../../gitlab';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
@@ -20,8 +21,10 @@ export async function load({ params }) {
 	
 	module = await moduleWithRating(module);
 	module.reviews = await Promise.all(module.reviews.map(review => reviewWithOverallStars(review)));
+	
+	const editUrl = getGitLabLink(`/modules/${module.dirname}`)
 
-	return { module, possibleRating };
+	return { module, possibleRating, editUrl };
 	
 	// throw error(404, 'Not found');
 }

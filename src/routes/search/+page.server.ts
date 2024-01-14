@@ -11,8 +11,6 @@ export async function load({ url, params }) {
 	const filters = deserializeFilters(filtersRaw, availableFilters);
 	const searchQuery = url.searchParams.get('q') ?? '';
 	
-	console.log(filters);
-	
 	return {
 		availableFilters,
 		filters,

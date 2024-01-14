@@ -10,14 +10,13 @@
 	import ReviewFormModal from './ReviewFormModal.svelte';
 	import { errorMessage } from '../../../lib/Message/MessageStore';
 	import EditIcon from '../../../lib/icons/EditIcon.svelte';
-	import { GITHUB_LINK } from '../../../lib/Data/definitions';
 
 	export let data;
-	let module, possibleRating;
+	let module, possibleRating, editUrl;
 	$: data && updateByData();
 
 	function updateByData() {
-		({ module, possibleRating } = data);
+		({ module, possibleRating, editUrl } = data);
 	}
 
 	// load existing review
@@ -71,7 +70,7 @@
 	<article>
 		<h2 class="h2 mt-0 flex justify-between">
 			Beschreibung
-			<a class="btn btn-ghost" target="_blank" rel="noreferrer" href="{GITHUB_LINK}/tree/main/data/modules/{module.dirname}">
+			<a class="btn btn-ghost" target="_blank" rel="noreferrer" href="{editUrl}">
 				<EditIcon />
 			</a>
 		</h2>
