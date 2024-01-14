@@ -119,6 +119,8 @@ export async function updateByFile<T>(diffSummary: DiffSummary, fileName: string
 		commands.push(...upserts.map(upsert => (prisma[model] as any).upsert(upsert)));
 		console.log('updated file: ' + fileName);
 		prisma.$transaction(commands);
+	} else {
+		console.log(`${model} is up-to-date`)
 	}
 }
 
@@ -149,8 +151,6 @@ export async function updateModules(diffSummary: DiffSummary) {
 				console.error(e);
 			}
 		} else {
-			
-			
 			try {
 				const description = await downloadFile(descriptionFile);
 				const metadata = await readMetadataFile(metadataFile);
