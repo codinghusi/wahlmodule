@@ -1,0 +1,32 @@
+services:
+  database:
+    image: mysql:8.2
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 5s
+      interval: 30s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      # changes need to be adjusted in `Dockerfile` at DATABASE_URL
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db
+
+  website:
+    build: .
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - 0.0.0.0:${PORT}:5000
+    volumes:
+      - updater-data:/updater-data
+volumes:
+  updater-data:
+  db-data:

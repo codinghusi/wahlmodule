@@ -12,12 +12,12 @@ const focusesFile = 'data/other/focuses.json';
 const ratingsFile = 'data/other/ratings.json';
 
 getDiffSummary().then(async summary => {
-	await Promise.all([
-		updateByFile(summary, ratingsFile, 'id', 'rating', true),
-		updateByFile(summary, focusesFile, 'name', 'focus', true),
-		updateByFile(summary, lecturersFile, 'short', 'lecturer'),
-		updateByFile(summary, degreeProgramsFile, 'short', 'degreeProgram'),
-		updateModules(summary)
+	await prisma.$transaction([
+			...await updateByFile(summary, ratingsFile, 'id', 'rating', true),
+			...await updateByFile(summary, focusesFile, 'name', 'focus', true),
+			...await updateByFile(summary, lecturersFile, 'short', 'lecturer'),
+			...await updateByFile(summary, degreeProgramsFile, 'short', 'degreeProgram'),
+			...await updateModules(summary)
 	])
 	
 	updateHash(summary.latestCommit);

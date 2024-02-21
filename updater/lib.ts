@@ -28,7 +28,7 @@ function getGitlabConfig(): GitlabConfig {
 		const config: Partial<GitlabConfig>  = {
 			accessToken: process.env.GITLAB_ACCESS_TOKEN,
 			url: process.env.GITLAB_URL,
-			projectId: process.env.GITLAB_PROJECT_ID ,
+			projectId: process.env.GITLAB_PROJECT_ID,
 			branchName: process.env.GITLAB_BRANCH_NAME,
 			currentCommit: getLastCommitHash()
 		};
@@ -118,16 +118,18 @@ export async function updateByFile<T>(diffSummary: DiffSummary, fileName: string
 		}
 		commands.push(...upserts.map(upsert => (prisma[model] as any).upsert(upsert)));
 		console.log('updated file: ' + fileName);
-		prisma.$transaction(commands);
+		return commands;
 	} else {
 		console.log(`${model} is up-to-date`)
 	}
+	return [];
 }
 
 export async function updateModules(diffSummary: DiffSummary) {
 	const updates = [] as Record<string, any>[];
 	const walkedDirectories = new Set<string>();
 	const deletes = [];
+	// FIXME: parallelize with Promise.all
 	for (const file of diffSummary.diffs) {
 		const dirname = path.dirname(file.new_path);
 		if (dirname.endsWith('other')) {
@@ -159,7 +161,7 @@ export async function updateModules(diffSummary: DiffSummary) {
 				updates.push({ dirname, ...update });
 				console.log('updated module: ' + dirname);
 			} catch (e) {
-				console.error(e, `in directory ${dirname}`);
+				console.error(`Error in directory ${dirname}`, e);
 			}
 		}
 	}
@@ -177,19 +179,17 @@ export async function updateModules(diffSummary: DiffSummary) {
 		)
 	);
 	
-	await prisma.$transaction(
-		[
-			...updates.map((update, i) => prisma.module.upsert({
-				where: {
-					short: update.short
-				},
-				update: update,
-				create: creates[i] as any
-			})),
-			
-			prisma.module.deleteMany({ where: { dirname: { in: deletes } } })
-		]
-	);
+	return [
+		prisma.module.deleteMany({ where: { dirname: { in: deletes } } }),
+		
+		...updates.map((update, i) => prisma.module.upsert({
+			where: {
+				short: update.short
+			},
+			update: update,
+			create: creates[i] as any
+		})),
+	]
 }
 
 async function readMetadataFile(filename: string) {
